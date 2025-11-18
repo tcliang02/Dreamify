@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { storage } from '@/lib/storage';
-import { Programme, Prototype, ProgrammeRegistration } from '@/types';
+import { Programme, Startup, ProgrammeRegistration } from '@/types';
 import { ArrowLeft, Loader2, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -18,7 +18,7 @@ export default function ProgrammeApplicationPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [programme, setProgramme] = useState<Programme | null>(null);
-  const [prototypes, setPrototypes] = useState<Prototype[]>([]);
+  const [prototypes, setPrototypes] = useState<Startup[]>([]);
   const [formData, setFormData] = useState({
     prototypeId: '',
     applicationMessage: '',
