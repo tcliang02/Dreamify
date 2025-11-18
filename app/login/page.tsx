@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -14,6 +14,36 @@ export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  // Auto-login as demo user
+  useEffect(() => {
+    const autoLogin = () => {
+      const users = storage.getUsers();
+      let demoUser = users.find((u: any) => u.email === 'demo@dreamify.com' || u.id === 'demo-user');
+      
+      if (!demoUser) {
+        // Create demo user
+        demoUser = {
+          id: 'demo-user',
+          name: 'Demo User',
+          email: 'demo@dreamify.com',
+          role: 'innovator',
+          university: 'Universiti Malaya (UM)',
+          field: 'Computer Science',
+          bio: 'Passionate innovator working on IoT and AI solutions for smart cities.',
+        };
+        storage.saveUsers([...users, demoUser]);
+      }
+      
+      storage.saveSession(demoUser);
+      initializeData();
+      router.push('/dashboard');
+    };
+
+    // Auto-login after a short delay
+    const timer = setTimeout(autoLogin, 500);
+    return () => clearTimeout(timer);
+  }, [router]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();

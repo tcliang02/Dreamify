@@ -155,8 +155,8 @@ export default function EventsPage() {
             {filteredEvents.map((event) => (
               <Card key={event.id} className="hover-lift border-2 hover:border-primary/50 transition-all">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                  <div className="md:col-span-1 p-6 border-r bg-muted/30">
-                    <div className="text-center">
+                  <div className="md:col-span-1 p-6 border-r bg-muted/30 flex flex-col">
+                    <div className="text-center mb-4">
                       <div className="text-3xl font-bold text-primary mb-1">
                         {new Date(event.date).getDate()}
                       </div>
@@ -170,6 +170,15 @@ export default function EventsPage() {
                         {event.startTime} - {event.endTime}
                       </div>
                     </div>
+                    {event.image && (
+                      <div className="mt-auto flex-1 flex items-end">
+                        <img 
+                          src={event.image} 
+                          alt={event.title}
+                          className="w-full h-full min-h-[200px] max-h-[400px] object-cover rounded-lg shadow-md"
+                        />
+                      </div>
+                    )}
                   </div>
 
                   <div className="md:col-span-3 p-6">

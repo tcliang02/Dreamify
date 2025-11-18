@@ -118,20 +118,20 @@ export default function StartupsPage() {
 
         {/* Filters and Sorting */}
         <div className="mb-8 space-y-4">
-          {/* Category Filter */}
+        {/* Category Filter */}
           <div>
             <label className="text-sm font-medium mb-2 block">Category</label>
             <div className="flex flex-wrap gap-2">
-              {categories.map((category) => (
-                <Button
-                  key={category}
+          {categories.map((category) => (
+            <Button
+              key={category}
                   onClick={() => setCategoryFilter(category)}
                   variant={categoryFilter === category ? "default" : "outline"}
-                  size="sm"
-                >
-                  {category.charAt(0).toUpperCase() + category.slice(1)}
-                </Button>
-              ))}
+              size="sm"
+            >
+              {category.charAt(0).toUpperCase() + category.slice(1)}
+            </Button>
+          ))}
             </div>
           </div>
 
@@ -294,27 +294,34 @@ export default function StartupsPage() {
                       ))}
                     </div>
                   </CardContent>
-                  <CardFooter className="pt-4 border-t flex items-center justify-between">
-                    {/* Views and Likes */}
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <div className="flex items-center gap-1.5">
-                        <Eye className="h-4 w-4" />
-                        <span className="font-medium">{startup.views || 0}</span>
+                  <CardFooter className="pt-4 border-t">
+                    <div className="w-full flex items-center justify-between gap-3">
+                      {/* Views and Likes - Made more prominent */}
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200">
+                          <Eye className="h-5 w-5 text-blue-600" />
+                          <span className="font-bold text-blue-700 text-base">{startup.views || 0}</span>
+                          <span className="text-xs text-blue-600 font-medium">views</span>
+                        </div>
+                        <div className="flex items-center gap-2 px-3 py-1.5 bg-pink-50 rounded-lg border border-pink-200">
+                          <Heart className="h-5 w-5 text-pink-600 fill-pink-600" />
+                          <span className="font-bold text-pink-700 text-base">{startup.likes || 0}</span>
+                          <span className="text-xs text-pink-600 font-medium">likes</span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-1.5">
-                        <Heart className="h-4 w-4" />
-                        <span className="font-medium">{startup.likes || 0}</span>
-                      </div>
+                      {/* Trending Badge - Made more prominent */}
+                      {((startup.views || 0) > 200 && (startup.likes || 0) > 20) || 
+                       ((startup.views || 0) > 500) || 
+                       ((startup.likes || 0) > 50) ? (
+                        <Badge 
+                          variant="default" 
+                          className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold px-4 py-2 text-sm shadow-lg border-2 border-orange-300"
+                        >
+                          <TrendingUp className="h-4 w-4 mr-1.5" />
+                          TRENDING
+                        </Badge>
+                      ) : null}
                     </div>
-                    {/* Trending Badge */}
-                    {((startup.views || 0) > 200 && (startup.likes || 0) > 20) || 
-                     ((startup.views || 0) > 500) || 
-                     ((startup.likes || 0) > 50) ? (
-                      <Badge variant="default" className="bg-orange-500 hover:bg-orange-600">
-                        <TrendingUp className="h-3 w-3 mr-1" />
-                        Trending
-                      </Badge>
-                    ) : null}
                   </CardFooter>
                 </Link>
               </Card>

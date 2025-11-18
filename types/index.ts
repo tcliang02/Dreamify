@@ -1,3 +1,37 @@
+export type SubscriptionTier = 'free' | 'pro' | 'pro-plus';
+export type SubscriptionStatus = 'active' | 'cancelled' | 'expired' | 'trial';
+
+export interface Subscription {
+  id: string;
+  userId: string;
+  tier: SubscriptionTier;
+  status: SubscriptionStatus;
+  startDate: string;
+  endDate?: string;
+  promoCode?: string;
+  institutionName?: string;
+  autoRenew: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SubscriptionPlan {
+  id: SubscriptionTier;
+  name: string;
+  price: number;
+  priceUSD?: number;
+  currency: string;
+  interval: 'month' | 'year';
+  recommendedFor?: 'students' | 'students-and-institutions' | 'institutions';
+  features: string[];
+  limits: {
+    startupListings: number;
+    mentorshipTokens: number;
+    mentorshipDuration: number; // in minutes
+  };
+  requiresPromoCode?: boolean;
+}
+
 export interface User {
   id: string;
   name: string;
@@ -7,6 +41,7 @@ export interface User {
   field?: string;
   bio?: string;
   avatar?: string;
+  subscriptionId?: string;
 }
 
 export interface TeamMember {
@@ -113,7 +148,11 @@ export interface Mentor {
   bio: string;
   experience: number;
   avatar?: string;
+  image?: string;
   availability: 'available' | 'busy' | 'unavailable';
+  isPremium?: boolean;
+  mentorshipPrice?: number; // Price per session in MYR
+  requiresPayment?: boolean;
 }
 
 export interface FundingOpportunity {
@@ -180,8 +219,22 @@ export interface MentorshipRequest {
   goals?: string;
   status: 'pending' | 'approved' | 'rejected';
   mentorResponse?: string;
+  requiresPayment?: boolean;
+  paymentAmount?: number;
+  paymentStatus?: 'pending' | 'paid' | 'refunded';
   createdAt: string;
   updatedAt: string;
+}
+
+export interface OnDemandPurchase {
+  id: string;
+  userId: string;
+  type: 'startup_listing' | 'mentorship_token';
+  amount: number;
+  currency: string;
+  status: 'pending' | 'completed' | 'failed';
+  createdAt: string;
+  expiresAt?: string;
 }
 
 export interface Programme {
@@ -258,6 +311,38 @@ export interface EventRegistration {
   attendeeName: string;
   attendeeEmail: string;
   status: 'registered' | 'attended' | 'cancelled';
+  createdAt: string;
+}
+
+export interface Notification {
+  id: string;
+  userId: string;
+  type: 'mentorship' | 'funding' | 'programme' | 'event' | 'comment' | 'like' | 'system';
+  title: string;
+  message: string;
+  link?: string;
+  read: boolean;
+  createdAt: string;
+}
+
+export interface Comment {
+  id: string;
+  startupId: string;
+  userId: string;
+  userName: string;
+  userAvatar?: string;
+  content: string;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+export interface Activity {
+  id: string;
+  userId: string;
+  type: 'startup_created' | 'startup_updated' | 'mentorship_requested' | 'funding_applied' | 'programme_registered' | 'event_registered' | 'comment_added' | 'like_added';
+  title: string;
+  description: string;
+  link?: string;
   createdAt: string;
 }
 

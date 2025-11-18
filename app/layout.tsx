@@ -9,6 +9,10 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Dreamify - Platform for Young Innovators',
   description: 'A platform for young innovators and students to showcase prototypes and connect with mentors and funding opportunities in Malaysia',
+  icons: {
+    icon: '/images/dreamifylogo.png',
+    apple: '/images/dreamifylogo.png',
+  },
 }
 
 export default function RootLayout({

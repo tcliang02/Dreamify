@@ -2,20 +2,42 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { Menu, X, User, LogOut, Sparkles } from 'lucide-react';
+import { Menu, X, User, LogOut, Sparkles, Crown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { getUserSubscriptionPlan } from '@/lib/subscription';
+import { storage } from '@/lib/storage';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [subscriptionTier, setSubscriptionTier] = useState<string>('Free');
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const session = localStorage.getItem('dreamify_session');
       if (session) {
-        setUser(JSON.parse(session));
+        const userData = JSON.parse(session);
+        setUser(userData);
+        // Get subscription tier
+        const subscription = storage.getUserSubscription(userData.id);
+        if (subscription) {
+          if (subscription.tier === 'pro') {
+            // Check if they used a promo code
+            if (subscription.promoCode) {
+              setSubscriptionTier('Education');
+            } else {
+              setSubscriptionTier('Pro');
+            }
+          } else if (subscription.tier === 'pro-plus') {
+            setSubscriptionTier('Pro+');
+          } else {
+            setSubscriptionTier('Free');
+          }
+        } else {
+          setSubscriptionTier('Free');
+        }
       }
 
       const handleScroll = () => {
@@ -40,13 +62,22 @@ export default function Navbar() {
       scrolled && "shadow-md"
     )}>
       <div className="container flex h-16 items-center justify-between px-4">
-        <Link href="/" className="flex items-center space-x-2 group">
-          <div className="relative">
-            <Sparkles className="h-6 w-6 text-primary group-hover:scale-110 transition-transform" />
-            <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-          </div>
-          <span className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-            Dreamify
+        <Link href="/" className="flex items-center space-x-3 group">
+          <img 
+            src="/images/dreamifylogo.png" 
+            alt="Dreamify Logo" 
+            className="h-12 w-auto group-hover:opacity-80 transition-opacity flex-shrink-0"
+            onError={(e) => {
+              // Fallback to icon if image fails
+              e.currentTarget.style.display = 'none';
+              const parent = e.currentTarget.parentElement;
+              if (parent) {
+                parent.innerHTML = '<div class="relative"><svg class="h-6 w-6 text-primary group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg></div><span class="text-2xl font-medium tracking-wider bg-gradient-to-r from-blue-600 via-blue-500 to-blue-700 bg-clip-text text-transparent">DREAMIFY</span>';
+              }
+            }}
+          />
+          <span className="text-2xl font-medium tracking-wider bg-gradient-to-r from-blue-600 via-blue-500 to-blue-700 bg-clip-text text-transparent group-hover:opacity-90 transition-opacity" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 500 }}>
+            DREAMIFY
           </span>
         </Link>
 
@@ -67,12 +98,16 @@ export default function Navbar() {
           <Link href="/funding" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
             Funding
           </Link>
-          <Link href="/businesses" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
-            Businesses
+          <Link href="/resources" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+            Resources
           </Link>
 
           {user ? (
             <div className="flex items-center space-x-4 ml-4 pl-4 border-l">
+              <Link href="/subscription" className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+                <Crown className="h-4 w-4" />
+                <span>{subscriptionTier}</span>
+              </Link>
               <Link href="/dashboard" className="flex items-center space-x-2 text-sm font-medium hover:text-primary transition-colors">
                 <User className="h-4 w-4" />
                 <span>{user.name}</span>
@@ -122,11 +157,15 @@ export default function Navbar() {
             <Link href="/funding" className="block text-sm font-medium hover:text-primary transition-colors">
               Funding
             </Link>
-            <Link href="/businesses" className="block text-sm font-medium hover:text-primary transition-colors">
-              Businesses
+            <Link href="/resources" className="block text-sm font-medium hover:text-primary transition-colors">
+              Resources
             </Link>
             {user ? (
               <>
+                <Link href="/subscription" className="flex items-center gap-1.5 block text-sm font-medium hover:text-primary transition-colors">
+                  <Crown className="h-4 w-4" />
+                  <span>{subscriptionTier}</span>
+                </Link>
                 <Link href="/dashboard" className="block text-sm font-medium hover:text-primary transition-colors">
                   Dashboard
                 </Link>

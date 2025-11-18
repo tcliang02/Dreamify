@@ -5,7 +5,8 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { storage } from '@/lib/storage';
 import { Startup } from '@/types';
-import { ArrowLeft, Mail, Send, DollarSign, Users, Building2, Calendar, MapPin, Phone, Globe, Linkedin, FileText, ExternalLink, Eye, Heart, TrendingUp, GraduationCap } from 'lucide-react';
+import { ArrowLeft, Mail, Send, DollarSign, Users, Building2, Calendar, MapPin, Phone, Globe, Linkedin, FileText, ExternalLink, Eye, Heart, TrendingUp, GraduationCap, Share2, Facebook, Twitter } from 'lucide-react';
+import CommentsSection from '@/components/CommentsSection';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -153,22 +154,75 @@ export default function StartupDetailPage() {
               </div>
             </div>
 
-            {/* Views, Likes, and Like Button */}
-            <div className="flex items-center gap-6 mb-6 pb-4 border-b">
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Eye className="h-5 w-5" />
-                <span className="text-lg font-semibold">{startup.views || 0}</span>
-                <span className="text-sm">views</span>
-              </div>
-              <div className="flex items-center gap-2">
+            {/* Views, Likes, Like Button, and Social Sharing */}
+            <div className="flex items-center justify-between gap-6 mb-6 pb-4 border-b flex-wrap">
+              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200">
+                  <Eye className="h-5 w-5 text-blue-600" />
+                  <span className="text-lg font-bold text-blue-700">{startup.views || 0}</span>
+                  <span className="text-sm text-blue-600 font-medium">views</span>
+                </div>
                 <Button
                   variant={isLiked ? "default" : "outline"}
                   size="sm"
                   onClick={handleLike}
-                  className={isLiked ? "bg-red-500 hover:bg-red-600" : ""}
+                  className={isLiked ? "bg-pink-500 hover:bg-pink-600" : "border-pink-200 hover:bg-pink-50"}
                 >
                   <Heart className={`h-4 w-4 mr-2 ${isLiked ? 'fill-white' : ''}`} />
                   <span className="font-semibold">{startup.likes || 0}</span>
+                </Button>
+              </div>
+              
+              {/* Social Sharing Buttons */}
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground font-medium mr-2">Share:</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    const url = window.location.href;
+                    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
+                  }}
+                  className="border-blue-300 text-blue-700 hover:bg-blue-50"
+                >
+                  <Facebook className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    const url = window.location.href;
+                    const text = `${startup.title} - ${startup.description.substring(0, 100)}...`;
+                    window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank', 'width=600,height=400');
+                  }}
+                  className="border-sky-300 text-sky-700 hover:bg-sky-50"
+                >
+                  <Twitter className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    const url = window.location.href;
+                    const title = startup.title;
+                    const summary = startup.description.substring(0, 200);
+                    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
+                  }}
+                  className="border-blue-600 text-blue-700 hover:bg-blue-50"
+                >
+                  <Linkedin className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    const url = window.location.href;
+                    navigator.clipboard.writeText(url);
+                    alert('Link copied to clipboard!');
+                  }}
+                  className="border-gray-300 text-gray-700 hover:bg-gray-50"
+                >
+                  <Share2 className="h-4 w-4" />
                 </Button>
               </div>
             </div>
@@ -793,6 +847,15 @@ export default function StartupDetailPage() {
               </Link>
             </CardFooter>
           </Card>
+        </div>
+
+        {/* Comments Section */}
+        <div className="mt-6">
+          <CommentsSection 
+            startupId={startup.id} 
+            userId={storage.getSession()?.id}
+            userName={storage.getSession()?.name}
+          />
         </div>
       </div>
     </div>

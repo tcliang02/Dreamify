@@ -1,5 +1,6 @@
+'use client';
+
 import Link from 'next/link';
-import { Sparkles } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -7,10 +8,21 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <Sparkles className="h-5 w-5 text-primary" />
-              <h3 className="text-xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-                Dreamify
+            <div className="flex items-center space-x-3 mb-4">
+              <img 
+                src="/images/dreamifylogo.png" 
+                alt="Dreamify Logo" 
+                className="h-12 w-auto flex-shrink-0"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  const parent = e.currentTarget.parentElement;
+                  if (parent) {
+                    parent.innerHTML = '<h3 class="text-2xl font-medium tracking-wider bg-gradient-to-r from-blue-600 via-blue-500 to-blue-700 bg-clip-text text-transparent">DREAMIFY</h3>';
+                  }
+                }}
+              />
+              <h3 className="text-2xl font-medium tracking-wider bg-gradient-to-r from-blue-600 via-blue-500 to-blue-700 bg-clip-text text-transparent" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 500 }}>
+                DREAMIFY
               </h3>
             </div>
             <p className="text-muted-foreground text-sm">

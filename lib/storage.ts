@@ -13,6 +13,11 @@ const STORAGE_KEYS = {
   PROGRAMME_REGISTRATIONS: 'dreamify_programme_registrations',
   EVENT_REGISTRATIONS: 'dreamify_event_registrations',
   SESSION: 'dreamify_session',
+  SUBSCRIPTIONS: 'dreamify_subscriptions',
+  PROMO_CODES: 'dreamify_promo_codes',
+  NOTIFICATIONS: 'dreamify_notifications',
+  COMMENTS: 'dreamify_comments',
+  ACTIVITIES: 'dreamify_activities',
 };
 
 export const storage = {
@@ -567,7 +572,125 @@ export const storage = {
   getMentors: (): any[] => {
     if (typeof window === 'undefined') return [];
     const data = localStorage.getItem(STORAGE_KEYS.MENTORS);
-    return data ? JSON.parse(data) : [];
+    let mentors = data ? JSON.parse(data) : [];
+    
+    // Migration: Add university mentors if they don't exist
+    const existingIds = new Set(mentors.map((m: any) => m.id));
+    const universityMentors = [
+      {
+        id: 'mentor5',
+        name: 'Assoc. Prof. Dr. Sarah Lim',
+        email: 'sarahlim@utm.edu.my',
+        company: 'Universiti Teknologi Malaysia (UTM)',
+        expertise: ['IoT Development', 'Hardware Design', 'Embedded Systems', 'University Innovation'],
+        bio: 'Associate Professor at UTM specializing in IoT and embedded systems. Actively mentors student innovators and helps commercialize university research projects.',
+        experience: 12,
+        availability: 'available',
+        requiresPayment: false,
+      },
+      {
+        id: 'mentor6',
+        name: 'Dr. Muhammad Hafiz bin Abdullah',
+        email: 'mhafiz@upm.edu.my',
+        company: 'Universiti Putra Malaysia (UPM)',
+        expertise: ['Agricultural Technology', 'IoT Sensors', 'Data Analytics', 'Precision Farming'],
+        bio: 'Senior Lecturer at UPM with expertise in agricultural technology and IoT applications. Passionate about helping students develop innovative solutions for the agriculture sector.',
+        experience: 10,
+        availability: 'available',
+        requiresPayment: false,
+      },
+      {
+        id: 'mentor7',
+        name: 'Prof. Dr. Lee Mei Ling',
+        email: 'meiling@um.edu.my',
+        company: 'Universiti Malaya (UM)',
+        expertise: ['AI/ML', 'Computer Vision', 'Startup Strategy', 'Research Commercialization'],
+        bio: 'Professor at UM with extensive research in AI and machine learning. Successfully commercialized multiple research projects and mentors student startups.',
+        experience: 18,
+        availability: 'available',
+        requiresPayment: false,
+      },
+      {
+        id: 'mentor8',
+        name: 'Dr. Nurul Aina binti Hassan',
+        email: 'nurulaina@usm.edu.my',
+        company: 'Universiti Sains Malaysia (USM)',
+        expertise: ['Biotechnology', 'Healthcare Innovation', 'Product Development', 'Regulatory Affairs'],
+        bio: 'Senior Lecturer at USM specializing in biotechnology and healthcare innovation. Helps students navigate the complex process of bringing medical innovations to market.',
+        experience: 11,
+        availability: 'available',
+        requiresPayment: false,
+      },
+      {
+        id: 'mentor9',
+        name: 'Assoc. Prof. Dr. Tan Wei Jie',
+        email: 'tanweijie@utm.edu.my',
+        company: 'Universiti Teknologi Malaysia (UTM)',
+        expertise: ['Software Engineering', 'Cloud Computing', 'Startup Development', 'Technical Architecture'],
+        bio: 'Associate Professor at UTM with expertise in software engineering and cloud technologies. Actively involved in university startup programs and student mentorship.',
+        experience: 14,
+        availability: 'available',
+        requiresPayment: false,
+      },
+      {
+        id: 'mentor10',
+        name: 'Dr. Siti Nurhaliza binti Mohd',
+        email: 'sitinurhaliza@ukm.edu.my',
+        company: 'Universiti Kebangsaan Malaysia (UKM)',
+        expertise: ['Business Model Development', 'Market Research', 'Entrepreneurship', 'Social Innovation'],
+        bio: 'Senior Lecturer at UKM specializing in entrepreneurship and business development. Helps students transform innovative ideas into viable business models.',
+        experience: 9,
+        availability: 'available',
+        requiresPayment: false,
+      },
+    ];
+    
+    let updated = false;
+    universityMentors.forEach((mentor) => {
+      if (!existingIds.has(mentor.id)) {
+        mentors.push(mentor);
+        updated = true;
+      }
+    });
+    
+    // Also ensure premium mentors have the required fields and add images
+    const mentorImageMap: Record<string, string> = {
+      'mentor1': '/images/tanweiming.jpg', // Dr. Tan Wei Ming
+      'mentor2': '/images/norazlina.jpg', // Puan Norazlina
+      'mentor5': '/images/sarahlim.jpg', // Assoc. Prof. Dr. Sarah Lim
+      'mentor6': '/images/muhammadhafiz.jpg', // Dr. Muhammad Hafiz bin Abdullah
+      'mentor7': '/images/leemeiling.jpg', // Prof. Dr. Lee Mei Ling
+      'mentor8': '/images/nurulaina.jpg', // Dr. Nurul Aina binti Hassan
+    };
+    
+    mentors = mentors.map((mentor: any) => {
+      let mentorUpdated = false;
+      let updatedMentor = { ...mentor };
+      
+      // Add requiresPayment field if missing
+      if (!mentor.hasOwnProperty('requiresPayment')) {
+        mentorUpdated = true;
+        updatedMentor.requiresPayment = false;
+      }
+      
+      // Add/update image if available
+      if (mentorImageMap[mentor.id] && (!mentor.image || mentor.image !== mentorImageMap[mentor.id])) {
+        mentorUpdated = true;
+        updatedMentor.image = mentorImageMap[mentor.id];
+      }
+      
+      if (mentorUpdated) {
+        updated = true;
+        return updatedMentor;
+      }
+      return mentor;
+    });
+    
+    if (updated) {
+      localStorage.setItem(STORAGE_KEYS.MENTORS, JSON.stringify(mentors));
+    }
+    
+    return mentors;
   },
 
   saveMentors: (mentors: any[]): void => {
@@ -617,15 +740,21 @@ export const storage = {
     const data = localStorage.getItem(STORAGE_KEYS.PROGRAMMES);
     const programmes = data ? JSON.parse(data) : [];
     
-    // Migration: Add image field to existing programmes if missing
+    // Migration: Add image field to existing programmes if missing and update Dreamify Hackathon image
     let updated = false;
     const imageMap: Record<string, string> = {
       'prog1': '/images/Gemini_Generated_Image_o6zpnko6zpnko6zp.png',
       'prog2': '/images/Pre-Accelerator Bootcamp.png',
-      'prog3': '/images/Dreamify Hackathon 2025.png',
+      'prog3': '/images/dreamifyhackathon.jpg', // Updated to use the correct image file
     };
     
     const updatedProgrammes = programmes.map((prog: any) => {
+      // Force update prog3 (Dreamify Hackathon) to use the correct image
+      if (prog.id === 'prog3' && imageMap[prog.id]) {
+        updated = true;
+        return { ...prog, image: imageMap[prog.id] };
+      }
+      // Add image for other programmes if missing
       if (imageMap[prog.id] && !prog.image) {
         updated = true;
         return { ...prog, image: imageMap[prog.id] };
@@ -650,7 +779,56 @@ export const storage = {
   getEvents: (): any[] => {
     if (typeof window === 'undefined') return [];
     const data = localStorage.getItem(STORAGE_KEYS.EVENTS);
-    return data ? JSON.parse(data) : [];
+    let events = data ? JSON.parse(data) : [];
+    
+    // Migration: Remove specific events (event3, event4, event5)
+    // event3: Startup Funding Masterclass
+    // event4: Dreamify Hackathon 2025 (removed from events, kept in programmes)
+    // event5: Pre-Accelerator Bootcamp
+    const eventsToRemove = ['event3', 'event4', 'event5'];
+    const initialCount = events.length;
+    events = events.filter((event: any) => !eventsToRemove.includes(event.id));
+    
+    let updated = false;
+    if (events.length !== initialCount) {
+      updated = true;
+    }
+    
+    // Also ensure all events have image field and update existing events with images
+    // Force update images for event1 and event2 if they exist
+    const eventImageMap: Record<string, string> = {
+      'event1': '/images/innovationnetworkingnight.jpg', // Innovation Networking Night
+      'event2': '/images/aiandmachinelearningworkshop.jpg', // AI & Machine Learning Workshop
+    };
+    
+    events = events.map((event: any) => {
+      let eventUpdated = false;
+      let updatedEvent = { ...event };
+      
+      // Add image field if missing
+      if (!event.hasOwnProperty('image')) {
+        eventUpdated = true;
+        updatedEvent.image = undefined;
+      }
+      
+      // Update specific events with their images (force update)
+      if (eventImageMap[event.id]) {
+        eventUpdated = true;
+        updatedEvent.image = eventImageMap[event.id];
+      }
+      
+      if (eventUpdated) {
+        updated = true;
+        return updatedEvent;
+      }
+      return event;
+    });
+    
+    if (updated) {
+      localStorage.setItem(STORAGE_KEYS.EVENTS, JSON.stringify(events));
+    }
+    
+    return events;
   },
 
   saveEvents: (events: any[]): void => {
@@ -697,6 +875,188 @@ export const storage = {
   clearSession: (): void => {
     if (typeof window === 'undefined') return;
     localStorage.removeItem(STORAGE_KEYS.SESSION);
+  },
+
+  // Subscriptions
+  getSubscriptions: (): any[] => {
+    if (typeof window === 'undefined') return [];
+    const data = localStorage.getItem(STORAGE_KEYS.SUBSCRIPTIONS);
+    return data ? JSON.parse(data) : [];
+  },
+
+  saveSubscriptions: (subscriptions: any[]): void => {
+    if (typeof window === 'undefined') return;
+    localStorage.setItem(STORAGE_KEYS.SUBSCRIPTIONS, JSON.stringify(subscriptions));
+  },
+
+  getUserSubscription: (userId: string): any | null => {
+    if (typeof window === 'undefined') return null;
+    const subscriptions = storage.getSubscriptions();
+    const activeSubscription = subscriptions.find(
+      (sub: any) => sub.userId === userId && sub.status === 'active'
+    );
+    return activeSubscription || null;
+  },
+
+  createSubscription: (subscription: any): void => {
+    if (typeof window === 'undefined') return;
+    const subscriptions = storage.getSubscriptions();
+    subscriptions.push(subscription);
+    storage.saveSubscriptions(subscriptions);
+  },
+
+  updateSubscription: (subscriptionId: string, updates: any): void => {
+    if (typeof window === 'undefined') return;
+    const subscriptions = storage.getSubscriptions();
+    const index = subscriptions.findIndex((sub: any) => sub.id === subscriptionId);
+    if (index !== -1) {
+      subscriptions[index] = { ...subscriptions[index], ...updates, updatedAt: new Date().toISOString() };
+      storage.saveSubscriptions(subscriptions);
+    }
+  },
+
+  // Promo Codes
+  getPromoCodes: (): any[] => {
+    if (typeof window === 'undefined') return [];
+    const data = localStorage.getItem(STORAGE_KEYS.PROMO_CODES);
+    return data ? JSON.parse(data) : [];
+  },
+
+  savePromoCodes: (codes: any[]): void => {
+    if (typeof window === 'undefined') return;
+    localStorage.setItem(STORAGE_KEYS.PROMO_CODES, JSON.stringify(codes));
+  },
+
+  validatePromoCode: (code: string): any | null => {
+    if (typeof window === 'undefined') return null;
+    const codes = storage.getPromoCodes();
+    const promoCode = codes.find(
+      (c: any) => c.code.toLowerCase() === code.toLowerCase() && c.active && (!c.expiryDate || new Date(c.expiryDate) > new Date())
+    );
+    return promoCode || null;
+  },
+
+  // On-Demand Purchases
+  getOnDemandPurchases: (): any[] => {
+    if (typeof window === 'undefined') return [];
+    const data = localStorage.getItem('dreamify_on_demand_purchases');
+    return data ? JSON.parse(data) : [];
+  },
+
+  saveOnDemandPurchases: (purchases: any[]): void => {
+    if (typeof window === 'undefined') return;
+    localStorage.setItem('dreamify_on_demand_purchases', JSON.stringify(purchases));
+  },
+
+  createOnDemandPurchase: (purchase: any): void => {
+    if (typeof window === 'undefined') return;
+    const purchases = storage.getOnDemandPurchases();
+    purchases.push(purchase);
+    storage.saveOnDemandPurchases(purchases);
+  },
+
+  // Notifications
+  getNotifications: (userId?: string): any[] => {
+    if (typeof window === 'undefined') return [];
+    const data = localStorage.getItem(STORAGE_KEYS.NOTIFICATIONS);
+    const notifications = data ? JSON.parse(data) : [];
+    if (userId) {
+      return notifications.filter((n: any) => n.userId === userId);
+    }
+    return notifications;
+  },
+
+  saveNotifications: (notifications: any[]): void => {
+    if (typeof window === 'undefined') return;
+    localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify(notifications));
+  },
+
+  createNotification: (notification: any): void => {
+    if (typeof window === 'undefined') return;
+    const notifications = storage.getNotifications();
+    notifications.push({
+      ...notification,
+      id: `notif_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      createdAt: new Date().toISOString(),
+      read: false,
+    });
+    storage.saveNotifications(notifications);
+  },
+
+  markNotificationAsRead: (notificationId: string): void => {
+    if (typeof window === 'undefined') return;
+    const notifications = storage.getNotifications();
+    const updated = notifications.map((n: any) =>
+      n.id === notificationId ? { ...n, read: true } : n
+    );
+    storage.saveNotifications(updated);
+  },
+
+  markAllNotificationsAsRead: (userId: string): void => {
+    if (typeof window === 'undefined') return;
+    const notifications = storage.getNotifications();
+    const updated = notifications.map((n: any) =>
+      n.userId === userId ? { ...n, read: true } : n
+    );
+    storage.saveNotifications(updated);
+  },
+
+  // Comments
+  getComments: (startupId?: string): any[] => {
+    if (typeof window === 'undefined') return [];
+    const data = localStorage.getItem(STORAGE_KEYS.COMMENTS);
+    const comments = data ? JSON.parse(data) : [];
+    if (startupId) {
+      return comments.filter((c: any) => c.startupId === startupId);
+    }
+    return comments;
+  },
+
+  saveComments: (comments: any[]): void => {
+    if (typeof window === 'undefined') return;
+    localStorage.setItem(STORAGE_KEYS.COMMENTS, JSON.stringify(comments));
+  },
+
+  createComment: (comment: any): void => {
+    if (typeof window === 'undefined') return;
+    const comments = storage.getComments();
+    comments.push({
+      ...comment,
+      id: `comment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      createdAt: new Date().toISOString(),
+    });
+    storage.saveComments(comments);
+  },
+
+  // Activities
+  getActivities: (userId?: string): any[] => {
+    if (typeof window === 'undefined') return [];
+    const data = localStorage.getItem(STORAGE_KEYS.ACTIVITIES);
+    const activities = data ? JSON.parse(data) : [];
+    if (userId) {
+      return activities.filter((a: any) => a.userId === userId);
+    }
+    return activities;
+  },
+
+  saveActivities: (activities: any[]): void => {
+    if (typeof window === 'undefined') return;
+    localStorage.setItem(STORAGE_KEYS.ACTIVITIES, JSON.stringify(activities));
+  },
+
+  createActivity: (activity: any): void => {
+    if (typeof window === 'undefined') return;
+    const activities = storage.getActivities();
+    activities.unshift({
+      ...activity,
+      id: `activity_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      createdAt: new Date().toISOString(),
+    });
+    // Keep only last 1000 activities
+    if (activities.length > 1000) {
+      activities.splice(1000);
+    }
+    storage.saveActivities(activities);
   },
 };
 
@@ -1324,6 +1684,7 @@ export const initializeData = () => {
         bio: '15 years of experience in IoT and hardware development. Former CTO of multiple startups.',
         experience: 15,
         availability: 'available',
+        requiresPayment: false,
       },
       {
         id: 'mentor2',
@@ -1334,6 +1695,99 @@ export const initializeData = () => {
         bio: 'AI researcher and startup advisor with expertise in machine learning applications.',
         experience: 10,
         availability: 'available',
+        requiresPayment: false,
+      },
+      {
+        id: 'mentor3',
+        name: 'Prof. Dr. Lim Chee Keong',
+        email: 'limcheekeong@example.com',
+        company: 'Malaysian Innovation Academy',
+        expertise: ['AI/ML', 'Deep Tech', 'Research Commercialization'],
+        bio: 'Renowned AI researcher and tech commercialization expert. Former CTO of leading tech companies. Premium mentor with specialized expertise.',
+        experience: 20,
+        availability: 'available',
+        isPremium: true,
+        requiresPayment: true,
+        mentorshipPrice: 150,
+      },
+      {
+        id: 'mentor4',
+        name: 'Dato\' Ahmad Razak',
+        email: 'ahmadrazak@example.com',
+        company: 'Strategic Ventures Sdn. Bhd.',
+        expertise: ['Corporate Strategy', 'International Expansion', 'Investment'],
+        bio: 'Senior executive with extensive experience in corporate strategy and international business. Premium mentor offering specialized guidance.',
+        experience: 25,
+        availability: 'available',
+        isPremium: true,
+        requiresPayment: true,
+        mentorshipPrice: 200,
+      },
+      {
+        id: 'mentor5',
+        name: 'Assoc. Prof. Dr. Sarah Lim',
+        email: 'sarahlim@utm.edu.my',
+        company: 'Universiti Teknologi Malaysia (UTM)',
+        expertise: ['IoT Development', 'Hardware Design', 'Embedded Systems', 'University Innovation'],
+        bio: 'Associate Professor at UTM specializing in IoT and embedded systems. Actively mentors student innovators and helps commercialize university research projects.',
+        experience: 12,
+        availability: 'available',
+        requiresPayment: false,
+      },
+      {
+        id: 'mentor6',
+        name: 'Dr. Muhammad Hafiz bin Abdullah',
+        email: 'mhafiz@upm.edu.my',
+        company: 'Universiti Putra Malaysia (UPM)',
+        expertise: ['Agricultural Technology', 'IoT Sensors', 'Data Analytics', 'Precision Farming'],
+        bio: 'Senior Lecturer at UPM with expertise in agricultural technology and IoT applications. Passionate about helping students develop innovative solutions for the agriculture sector.',
+        experience: 10,
+        availability: 'available',
+        requiresPayment: false,
+      },
+      {
+        id: 'mentor7',
+        name: 'Prof. Dr. Lee Mei Ling',
+        email: 'meiling@um.edu.my',
+        company: 'Universiti Malaya (UM)',
+        expertise: ['AI/ML', 'Computer Vision', 'Startup Strategy', 'Research Commercialization'],
+        bio: 'Professor at UM with extensive research in AI and machine learning. Successfully commercialized multiple research projects and mentors student startups.',
+        experience: 18,
+        availability: 'available',
+        requiresPayment: false,
+      },
+      {
+        id: 'mentor8',
+        name: 'Dr. Nurul Aina binti Hassan',
+        email: 'nurulaina@usm.edu.my',
+        company: 'Universiti Sains Malaysia (USM)',
+        expertise: ['Biotechnology', 'Healthcare Innovation', 'Product Development', 'Regulatory Affairs'],
+        bio: 'Senior Lecturer at USM specializing in biotechnology and healthcare innovation. Helps students navigate the complex process of bringing medical innovations to market.',
+        experience: 11,
+        availability: 'available',
+        requiresPayment: false,
+      },
+      {
+        id: 'mentor9',
+        name: 'Assoc. Prof. Dr. Tan Wei Jie',
+        email: 'tanweijie@utm.edu.my',
+        company: 'Universiti Teknologi Malaysia (UTM)',
+        expertise: ['Software Engineering', 'Cloud Computing', 'Startup Development', 'Technical Architecture'],
+        bio: 'Associate Professor at UTM with expertise in software engineering and cloud technologies. Actively involved in university startup programs and student mentorship.',
+        experience: 14,
+        availability: 'available',
+        requiresPayment: false,
+      },
+      {
+        id: 'mentor10',
+        name: 'Dr. Siti Nurhaliza binti Mohd',
+        email: 'sitinurhaliza@ukm.edu.my',
+        company: 'Universiti Kebangsaan Malaysia (UKM)',
+        expertise: ['Business Model Development', 'Market Research', 'Entrepreneurship', 'Social Innovation'],
+        bio: 'Senior Lecturer at UKM specializing in entrepreneurship and business development. Helps students transform innovative ideas into viable business models.',
+        experience: 9,
+        availability: 'available',
+        requiresPayment: false,
       },
     ];
     localStorage.setItem(STORAGE_KEYS.MENTORS, JSON.stringify(sampleMentors));
@@ -1414,7 +1868,7 @@ export const initializeData = () => {
         fee: 0,
         grantAmount: 20000,
         status: 'open',
-        image: '/images/Dreamify Hackathon 2025.png',
+        image: '/images/dreamifyhackathon.jpg',
         tags: ['Hackathon', 'Competition', 'Innovation'],
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
@@ -1546,6 +2000,46 @@ export const initializeData = () => {
 
   // Initialize demo user data
   initializeDemoUserData();
+
+  // Initialize promo codes
+  if (!localStorage.getItem(STORAGE_KEYS.PROMO_CODES)) {
+    const samplePromoCodes = [
+      {
+        id: 'promo-utm-2025',
+        code: 'UTM2025',
+        institutionName: 'Universiti Teknologi Malaysia',
+        tier: 'pro',
+        active: true,
+        maxUses: 1000,
+        currentUses: 0,
+        expiryDate: new Date('2025-12-31').toISOString(),
+        createdAt: new Date().toISOString(),
+      },
+      {
+        id: 'promo-um-2025',
+        code: 'UM2025',
+        institutionName: 'Universiti Malaya',
+        tier: 'pro',
+        active: true,
+        maxUses: 1000,
+        currentUses: 0,
+        expiryDate: new Date('2025-12-31').toISOString(),
+        createdAt: new Date().toISOString(),
+      },
+      {
+        id: 'promo-upm-2025',
+        code: 'UPM2025',
+        institutionName: 'Universiti Putra Malaysia',
+        tier: 'pro',
+        active: true,
+        maxUses: 1000,
+        currentUses: 0,
+        expiryDate: new Date('2025-12-31').toISOString(),
+        createdAt: new Date().toISOString(),
+      },
+    ];
+    localStorage.setItem(STORAGE_KEYS.PROMO_CODES, JSON.stringify(samplePromoCodes));
+  }
 };
 
 // Initialize example data for demo user
