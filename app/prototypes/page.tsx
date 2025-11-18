@@ -11,7 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 
 export default function PrototypesPage() {
-  const [prototypes, setPrototypes] = useState<Prototype[]>([]);
+  const [prototypes, setPrototypes] = useState<Startup[]>([]);
   const [filter, setFilter] = useState<string>('all');
 
   useEffect(() => {

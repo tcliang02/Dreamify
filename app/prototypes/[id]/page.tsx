@@ -16,7 +16,7 @@ export default function PrototypeDetailPage() {
 
   useEffect(() => {
     const prototypes = storage.getPrototypes();
-    const found = prototypes.find((p: Prototype) => p.id === params.id);
+    const found = prototypes.find((p: Startup) => p.id === params.id);
     setPrototype(found || null);
   }, [params.id]);
 
