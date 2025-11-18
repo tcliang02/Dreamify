@@ -120,7 +120,7 @@ export default function FundingApplicationPage() {
       
       // Pre-select first prototype if only one
       if (userPrototypes.length === 1) {
-        setFormData({ prototypeId: userPrototypes[0].id, message: '' });
+        setFormData(prev => ({ ...prev, prototypeId: userPrototypes[0].id, message: '' }));
       }
     }
   }, [params.id, router]);
