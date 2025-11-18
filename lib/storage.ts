@@ -1669,7 +1669,7 @@ export const initializeData = () => {
     ];
     localStorage.setItem(STORAGE_KEYS.STARTUPS, JSON.stringify(sampleStartups));
     // Also set for legacy support
-    localStorage.setItem(STORAGE_KEYS.PROTOTYPES, JSON.stringify(sampleStartups));
+    localStorage.setItem('dreamify_prototypes', JSON.stringify(sampleStartups));
   }
 
   // Initialize mentors
