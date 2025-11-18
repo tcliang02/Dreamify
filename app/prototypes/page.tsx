@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { storage } from '@/lib/storage';
-import { Prototype } from '@/types';
+import { Startup } from '@/types';
 import { Eye, DollarSign, Tag, Calendar, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';

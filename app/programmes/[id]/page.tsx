@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { storage } from '@/lib/storage';
-import { Programme, Prototype } from '@/types';
+import { Programme, Startup } from '@/types';
 import { ArrowLeft, Calendar, MapPin, Users, DollarSign, Clock, CheckCircle, AlertCircle, Maximize2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';

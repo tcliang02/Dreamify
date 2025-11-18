@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { storage } from '@/lib/storage';
-import { Prototype } from '@/types';
+import { Startup } from '@/types';
 import { DollarSign, Tag, Calendar, User, ArrowLeft, Mail, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
