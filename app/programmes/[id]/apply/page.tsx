@@ -50,7 +50,7 @@ export default function ProgrammeApplicationPage() {
 
     const allPrototypes = storage.getPrototypes();
     const userPrototypes = allPrototypes.filter(
-      (p: Prototype) => p.innovatorId === session.id && p.status === 'active'
+      (p: Startup) => p.innovatorId === session.id && p.status === 'active'
     );
     
     if (userPrototypes.length === 0) {
@@ -110,8 +110,8 @@ export default function ProgrammeApplicationPage() {
         innovatorId: session.id,
         innovatorName: session.name,
         innovatorEmail: session.email,
-        prototypeId: formData.prototypeId,
-        prototypeTitle: selectedPrototype.title,
+        startupId: formData.prototypeId,
+        startupTitle: selectedPrototype.title,
         applicationMessage: formData.applicationMessage || undefined,
         status: 'pending',
         createdAt: new Date().toISOString(),
