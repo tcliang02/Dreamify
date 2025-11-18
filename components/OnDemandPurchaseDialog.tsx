@@ -39,7 +39,7 @@ export default function OnDemandPurchaseDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="w-[95vw] sm:max-w-[425px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Purchase {type === 'startup_listing' ? 'Startup Listing' : 'Mentorship Token'}</DialogTitle>
           <DialogDescription>

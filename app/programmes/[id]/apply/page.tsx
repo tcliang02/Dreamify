@@ -302,7 +302,7 @@ export default function ProgrammeApplicationPage() {
                 />
               </div>
 
-              <div className="flex gap-4 pt-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4">
                 <Button
                   type="button"
                   variant="outline"

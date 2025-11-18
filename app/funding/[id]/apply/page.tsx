@@ -368,7 +368,7 @@ export default function FundingApplicationPage() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 mb-6">
               <div className="flex items-center">
                 <DollarSign className="h-5 w-5 mr-2 text-primary" />
                 <div>
@@ -429,7 +429,7 @@ export default function FundingApplicationPage() {
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <Tabs defaultValue="prototype" className="w-full">
-                <TabsList className="grid w-full grid-cols-4">
+                <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 overflow-x-auto">
                   <TabsTrigger value="prototype">Prototype</TabsTrigger>
                   <TabsTrigger value="personal">Personal Info</TabsTrigger>
                   <TabsTrigger value="company">Company Info</TabsTrigger>
@@ -487,7 +487,7 @@ export default function FundingApplicationPage() {
                               <p className="text-sm text-muted-foreground mb-3">
                                 {selected.description}
                               </p>
-                              <div className="grid grid-cols-2 gap-4 text-sm">
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-sm">
                                 <div>
                                   <span className="text-muted-foreground">Stage: </span>
                                   <span className="font-medium capitalize">{selected.stage}</span>
@@ -731,7 +731,7 @@ export default function FundingApplicationPage() {
                   <div className="space-y-6">
                     <div className="space-y-3">
                       <Label>Focus Area (Select all that apply)</Label>
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
                         {[
                           'Digital Trade',
                           'Digital Cities',
