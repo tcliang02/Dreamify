@@ -43,7 +43,7 @@ export default function EventDetailPage() {
 
   if (!event) {
     return (
-      <div className="min-h-screen bg-background py-12">
+      <div className="min-h-screen  py-12">
         <div className="container mx-auto px-4">
           <Card className="text-center py-12">
             <CardContent>
@@ -67,7 +67,7 @@ export default function EventDetailPage() {
   const isDeadlinePassed = registrationDeadline ? registrationDeadline < new Date() : false;
 
   return (
-    <div className="min-h-screen bg-background py-12">
+    <div className="min-h-screen  py-12">
       <div className="container mx-auto px-4 max-w-4xl">
         <Link href="/events">
           <Button variant="ghost" className="mb-6">

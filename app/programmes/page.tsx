@@ -69,7 +69,7 @@ export default function ProgrammesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background py-12">
+    <div className="min-h-screen py-12">
       <div className="container mx-auto px-4">
         <div className="mb-6 sm:mb-8">
           <Badge variant="secondary" className="mb-3 sm:mb-4">Programmes</Badge>

@@ -79,7 +79,7 @@ export default function SearchPage() {
   const categories = ['all', ...Array.from(new Set(startups.map((s: any) => s.category)))];
 
   return (
-    <div className="min-h-screen bg-background py-12">
+    <div className="min-h-screen py-12">
       <div className="container mx-auto px-4 max-w-7xl">
         <div className="mb-6 sm:mb-8">
           <div className="flex items-center gap-2 mb-2">

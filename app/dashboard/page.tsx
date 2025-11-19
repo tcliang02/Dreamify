@@ -36,7 +36,7 @@ export default function DashboardPage() {
     setUser(session);
     
     // Initialize demo data if it's the demo user
-    if (session.id === 'demo-user' || session.email === 'demo@dreamify.com') {
+    if (session.id === 'demo-user' || session.email === 'demo@gostarthub.com') {
       initializeData();
     }
 
@@ -88,13 +88,13 @@ export default function DashboardPage() {
   const subscriptionUsage = user ? getSubscriptionUsage(user.id) : null;
 
   return (
-    <div className="min-h-screen bg-background py-8">
+    <div className="min-h-screen py-8">
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Header */}
         <div className="mb-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-4 mb-4">
             <div className="flex-1">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2">Welcome back, {user.name}!</h1>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 gradient-text-blue">Welcome back, {user.name}!</h1>
               <p className="text-lg sm:text-xl text-muted-foreground">
                 Manage your startups and track your innovation journey
               </p>

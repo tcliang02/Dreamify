@@ -92,7 +92,7 @@ export default function AnalyticsPage() {
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
 
   return (
-    <div className="min-h-screen bg-background py-6 sm:py-8">
+    <div className="min-h-screen py-6 sm:py-8">
       <div className="container mx-auto px-4 max-w-7xl">
         <Link href="/dashboard">
           <Button variant="ghost" className="mb-4 sm:mb-6">

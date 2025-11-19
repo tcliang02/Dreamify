@@ -44,7 +44,7 @@ export default function ProgrammeDetailPage() {
 
   if (!programme) {
     return (
-      <div className="min-h-screen bg-background py-12">
+      <div className="min-h-screen  py-12">
         <div className="container mx-auto px-4">
           <Card className="text-center py-12">
             <CardContent>
@@ -67,7 +67,7 @@ export default function ProgrammeDetailPage() {
   const isDeadlinePassed = applicationDeadline < new Date();
 
   return (
-    <div className="min-h-screen bg-background py-12">
+    <div className="min-h-screen  py-12">
       <div className="container mx-auto px-4 max-w-4xl">
         <Link href="/programmes">
           <Button variant="ghost" className="mb-6">
@@ -79,7 +79,7 @@ export default function ProgrammeDetailPage() {
         <Card className="mb-6 border-2 overflow-hidden">
           {/* Programme Image - Full Poster View */}
           {programme.image && (
-            <div className="relative w-full bg-background">
+            <div className="relative w-full ">
               <div className="relative w-full min-h-[400px] md:min-h-[500px] lg:min-h-[600px] flex items-center justify-center bg-muted/30">
                 <img 
                   src={programme.image} 
@@ -90,7 +90,7 @@ export default function ProgrammeDetailPage() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm hover:bg-background"
+                  className="absolute top-4 right-4 /80 backdrop-blur-sm hover:"
                   onClick={() => setIsImageFullscreen(true)}
                 >
                   <Maximize2 className="h-4 w-4 mr-2" />

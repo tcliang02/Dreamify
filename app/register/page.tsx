@@ -32,7 +32,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center py-12 px-4">
+    <div className="min-h-screen  flex items-center justify-center py-12 px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
@@ -40,7 +40,7 @@ export default function RegisterPage() {
           </div>
           <CardTitle className="text-3xl">Create Account</CardTitle>
           <CardDescription>
-            Join Dreamify and start your innovation journey
+            Join Go Start Hub and start your innovation journey
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -84,7 +84,7 @@ export default function RegisterPage() {
                 id="role"
                 value={formData.role}
                 onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="flex h-10 w-full rounded-md border border-input  px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 required
               >
                 <option value="innovator">Innovator/Student</option>

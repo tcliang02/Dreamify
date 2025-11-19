@@ -161,14 +161,14 @@ export default function FAQPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background py-12">
+    <div className="min-h-screen py-12">
       <div className="container mx-auto px-4 max-w-5xl">
         {/* Header */}
         <div className="text-center mb-8 sm:mb-12">
           <Badge variant="secondary" className="mb-3 sm:mb-4">Help Center</Badge>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">Frequently Asked Questions</h1>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
-            Find answers to common questions about Dreamify
+            Find answers to common questions about Go Start Hub
           </p>
         </div>
 
@@ -242,7 +242,7 @@ export default function FAQPage() {
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1">
                 <p className="font-semibold mb-1">Email Support</p>
-                <p className="text-muted-foreground">support@dreamify.com</p>
+                <p className="text-muted-foreground">support@gostarthub.com</p>
               </div>
               <div className="flex-1">
                 <p className="font-semibold mb-1">Response Time</p>

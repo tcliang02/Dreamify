@@ -1,4 +1,4 @@
-// Local storage management for Dreamify
+// Local storage management for Go Start Hub
 // In production, this would be replaced with a proper database
 
 const STORAGE_KEYS = {
@@ -49,6 +49,15 @@ export const storage = {
       updated = true;
     }
     
+    // Update existing SmartCampus IoT System startup with PDF if it exists
+    const smartCampusIndex = startups.findIndex((s: any) => s.id === '1' && s.title === 'SmartCampus IoT System');
+    if (smartCampusIndex !== -1) {
+      if (!startups[smartCampusIndex].pitchPdf || startups[smartCampusIndex].pitchPdf === '') {
+        startups[smartCampusIndex].pitchPdf = '/pitchdeck/SmartCampus IoT Pitch Deck.pdf';
+        updated = true;
+      }
+    }
+    
     // Check if new startups exist, if not add them
     const existingIds = new Set(startups.map((s: any) => s.id));
     const newStartups = [
@@ -88,7 +97,7 @@ export const storage = {
             { name: 'Nurul Aina', role: 'Co-Founder, Hardware Engineer' },
             { name: 'Lim Wei Jie', role: 'Co-Founder, AI Specialist' },
           ],
-          programmes: ['UTM Innovation Challenge 2024', 'Dreamify Pre-Accelerator Bootcamp'],
+          programmes: ['UTM Innovation Challenge 2024', 'Go Start Hub Pre-Accelerator Bootcamp'],
           foundedYear: 2024,
           legalName: 'SMARTCAMPUS IOT SDN. BHD.',
           commercialName: 'SmartCampus IoT System',
@@ -125,7 +134,7 @@ export const storage = {
           latestValuation: 'MYR 600,000',
           latestFundingRound: 'Pre-Seed',
         },
-        pitchPdf: '',
+        pitchPdf: '/pitchdeck/SmartCampus IoT Pitch Deck.pdf',
         news: [
           {
             id: 'news1',
@@ -173,7 +182,7 @@ export const storage = {
             { name: 'Muhammad Hafiz', role: 'Co-Founder, IoT Engineer' },
             { name: 'Tan Mei Ling', role: 'Co-Founder, Data Scientist' },
           ],
-          programmes: ['UPM Innovation Hub', 'Dreamify Hackathon 2025'],
+          programmes: ['UPM Innovation Hub', 'Go Start Hub Hackathon 2025'],
           foundedYear: 2024,
           legalName: 'AGRISENSE IOT SDN. BHD.',
           commercialName: 'AgriSense IoT Platform',
@@ -258,7 +267,7 @@ export const storage = {
             { name: 'Nur Izzati', role: 'Co-Founder, Software Engineer' },
             { name: 'Chong Yew Meng', role: 'Co-Founder, Hardware Engineer' },
           ],
-          programmes: ['UM Innovation Challenge', 'Dreamify Accelerator 2025'],
+          programmes: ['UM Innovation Challenge', 'Go Start Hub Accelerator 2025'],
           foundedYear: 2024,
           legalName: 'SMARTHOME AUTOMATION SDN. BHD.',
           commercialName: 'SmartHome Automation System',
@@ -740,7 +749,7 @@ export const storage = {
     const data = localStorage.getItem(STORAGE_KEYS.PROGRAMMES);
     const programmes = data ? JSON.parse(data) : [];
     
-    // Migration: Add image field to existing programmes if missing and update Dreamify Hackathon image
+    // Migration: Add image field to existing programmes if missing and update Go Start Hub Hackathon image
     let updated = false;
     const imageMap: Record<string, string> = {
       'prog1': '/images/Gemini_Generated_Image_o6zpnko6zpnko6zp.png',
@@ -749,7 +758,7 @@ export const storage = {
     };
     
     const updatedProgrammes = programmes.map((prog: any) => {
-      // Force update prog3 (Dreamify Hackathon) to use the correct image
+      // Force update prog3 (Go Start Hub Hackathon) to use the correct image
       if (prog.id === 'prog3' && imageMap[prog.id]) {
         updated = true;
         return { ...prog, image: imageMap[prog.id] };
@@ -783,7 +792,7 @@ export const storage = {
     
     // Migration: Remove specific events (event3, event4, event5)
     // event3: Startup Funding Masterclass
-    // event4: Dreamify Hackathon 2025 (removed from events, kept in programmes)
+    // event4: Go Start Hub Hackathon 2025 (removed from events, kept in programmes)
     // event5: Pre-Accelerator Bootcamp
     const eventsToRemove = ['event3', 'event4', 'event5'];
     const initialCount = events.length;
@@ -1135,7 +1144,7 @@ export const initializeData = () => {
             { name: 'Nurul Aina', role: 'Co-Founder, Hardware Engineer' },
             { name: 'Lim Wei Jie', role: 'Co-Founder, AI Specialist' },
           ],
-          programmes: ['UTM Innovation Challenge 2024', 'Dreamify Pre-Accelerator Bootcamp'],
+          programmes: ['UTM Innovation Challenge 2024', 'Go Start Hub Pre-Accelerator Bootcamp'],
           foundedYear: 2024,
           legalName: 'SMARTCAMPUS IOT SDN. BHD.',
           commercialName: 'SmartCampus IoT System',
@@ -1215,7 +1224,7 @@ export const initializeData = () => {
             { name: 'Muhammad Hafiz', role: 'Co-Founder, IoT Engineer' },
             { name: 'Tan Mei Ling', role: 'Co-Founder, Data Scientist' },
           ],
-          programmes: ['UPM Innovation Hub', 'Dreamify Hackathon 2025'],
+          programmes: ['UPM Innovation Hub', 'Go Start Hub Hackathon 2025'],
           foundedYear: 2024,
           legalName: 'AGRISENSE IOT SDN. BHD.',
           commercialName: 'AgriSense IoT Platform',
@@ -1295,7 +1304,7 @@ export const initializeData = () => {
             { name: 'Nur Izzati', role: 'Co-Founder, Software Engineer' },
             { name: 'Chong Yew Meng', role: 'Co-Founder, Hardware Engineer' },
           ],
-          programmes: ['UM Innovation Challenge', 'Dreamify Accelerator 2025'],
+          programmes: ['UM Innovation Challenge', 'Go Start Hub Accelerator 2025'],
           foundedYear: 2024,
           legalName: 'SMARTHOME AUTOMATION SDN. BHD.',
           commercialName: 'SmartHome Automation System',
@@ -1457,7 +1466,7 @@ export const initializeData = () => {
             { name: 'Ahmad Rahman', role: 'Founder, CEO' },
             { name: 'Lisa Tan', role: 'Co-Founder, COO' },
           ],
-          programmes: ['MRANTI Technology Park Programme', 'Dreamify Accelerator 2025'],
+          programmes: ['MRANTI Technology Park Programme', 'Go Start Hub Accelerator 2025'],
           foundedYear: 2023,
           legalName: 'GREENCYCLE SOLUTIONS SDN. BHD.',
           commercialName: 'GreenCycle Solutions',
@@ -1798,11 +1807,11 @@ export const initializeData = () => {
     const sampleProgrammes = [
       {
         id: 'prog1',
-        title: 'Dreamify Accelerator 2025',
+        title: 'Go Start Hub Accelerator 2025',
         description: 'A 12-week intensive accelerator program designed to help student innovators transform their prototypes into viable startups. Includes mentorship, funding, and access to investor network.',
         type: 'accelerator',
         category: 'Accelerator',
-        organizer: 'Dreamify',
+        organizer: 'Go Start Hub',
         organizerId: 'org1',
         startDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
         endDate: new Date(Date.now() + 120 * 24 * 60 * 60 * 1000).toISOString(),
@@ -1828,7 +1837,7 @@ export const initializeData = () => {
         description: 'A 6-week bootcamp for early-stage innovators to develop their ideas into prototypes. Perfect for students with innovative concepts but no prototype yet.',
         type: 'pre-accelerator',
         category: 'Pre-Accelerator',
-        organizer: 'Dreamify',
+        organizer: 'Go Start Hub',
         organizerId: 'org1',
         startDate: new Date(Date.now() + 45 * 24 * 60 * 60 * 1000).toISOString(),
         endDate: new Date(Date.now() + 87 * 24 * 60 * 60 * 1000).toISOString(),
@@ -1849,11 +1858,11 @@ export const initializeData = () => {
       },
       {
         id: 'prog3',
-        title: 'Dreamify Hackathon 2025',
+        title: 'Go Start Hub Hackathon 2025',
         description: '48-hour hackathon for students to build innovative solutions addressing real-world problems. Winners receive funding and mentorship opportunities.',
         type: 'hackathon',
         category: 'Hackathon',
-        organizer: 'Dreamify',
+        organizer: 'Go Start Hub',
         organizerId: 'org1',
         startDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000).toISOString(),
         endDate: new Date(Date.now() + 62 * 24 * 60 * 60 * 1000).toISOString(),
@@ -1885,7 +1894,7 @@ export const initializeData = () => {
         title: 'Innovation Networking Night',
         description: 'Join us for an evening of networking with fellow innovators, mentors, and investors. Great opportunity to showcase your prototype and make valuable connections.',
         type: 'networking',
-        organizer: 'Dreamify',
+        organizer: 'Go Start Hub',
         organizerId: 'org1',
         date: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
         startTime: '18:00',
@@ -1912,7 +1921,7 @@ export const initializeData = () => {
         title: 'AI & Machine Learning Workshop',
         description: 'Learn how to integrate AI and ML into your prototypes. Hands-on workshop with industry experts covering practical applications and tools.',
         type: 'workshop',
-        organizer: 'Dreamify',
+        organizer: 'Go Start Hub',
         organizerId: 'org1',
         date: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000).toISOString(),
         startTime: '10:00',
@@ -1939,7 +1948,7 @@ export const initializeData = () => {
         title: 'Startup Funding Masterclass',
         description: 'Learn how to prepare for funding, pitch to investors, and navigate the investment landscape. Expert insights from successful entrepreneurs and investors.',
         type: 'seminar',
-        organizer: 'Dreamify',
+        organizer: 'Go Start Hub',
         organizerId: 'org1',
         date: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000).toISOString(),
         startTime: '14:00',
@@ -1968,6 +1977,76 @@ export const initializeData = () => {
   // Initialize funding opportunities
   if (!localStorage.getItem(STORAGE_KEYS.FUNDING_OPPORTUNITIES)) {
     const sampleOpportunities = [
+      {
+        id: 'cip-spark',
+        title: 'CIP SPARK - Conditional Grant Program',
+        description: 'Cradle Fund\'s conditional grant program offering up to RM150,000 for early-stage tech startups. Designed to assist entrepreneurs in developing and commercializing their technology startups. Open to both companies and individuals, with applications accepted throughout the year. Duration: Maximum 18 months.',
+        providerId: 'cradle-fund',
+        providerName: 'Cradle Fund Sdn Bhd',
+        amount: 150000,
+        category: 'Government Grant',
+        requirements: [
+          'Early-stage tech startup',
+          'Technology-based innovation',
+          'Ready for commercialization',
+          'Malaysian company or individual',
+          'Business plan and market validation',
+        ],
+        deadline: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(), // Year-round applications
+        status: 'open',
+        applications: [],
+        featured: true,
+        officialUrl: 'https://www.cradle.com.my',
+        grantDuration: '18 months',
+        tags: ['Government Grant', 'Cradle Fund', 'Technology', 'Commercialization', 'Featured'],
+      },
+      {
+        id: 'cip-sprint',
+        title: 'CIP Sprint - Early-Stage Funding',
+        description: 'Cradle Fund\'s CIP Sprint program provides early-stage funding for tech startups with innovative solutions. Designed to support startups in their initial development phase with funding and mentorship support.',
+        providerId: 'cradle-fund',
+        providerName: 'Cradle Fund Sdn Bhd',
+        amount: 100000,
+        category: 'Government Grant',
+        requirements: [
+          'Early-stage tech startup',
+          'Innovative technology solution',
+          'Malaysian company or individual',
+          'Proof of concept or early prototype',
+          'Market potential demonstration',
+        ],
+        deadline: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
+        status: 'open',
+        applications: [],
+        featured: true,
+        officialUrl: 'https://www.cradle.com.my',
+        grantDuration: '12-18 months',
+        tags: ['Government Grant', 'Cradle Fund', 'Technology', 'Early-Stage', 'Featured'],
+      },
+      {
+        id: 'cip-300',
+        title: 'CIP 300 - Growth Stage Funding',
+        description: 'Cradle Fund\'s CIP 300 program offers up to RM300,000 for growth-stage tech startups ready to scale. This program supports startups with proven business models looking to expand their market reach and commercialize their innovations.',
+        providerId: 'cradle-fund',
+        providerName: 'Cradle Fund Sdn Bhd',
+        amount: 300000,
+        category: 'Government Grant',
+        requirements: [
+          'Growth-stage tech startup',
+          'Proven business model',
+          'Market validation completed',
+          'Malaysian company',
+          'Revenue or traction demonstrated',
+          'Scaling plan',
+        ],
+        deadline: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
+        status: 'open',
+        applications: [],
+        featured: true,
+        officialUrl: 'https://www.cradle.com.my',
+        grantDuration: '18-24 months',
+        tags: ['Government Grant', 'Cradle Fund', 'Technology', 'Growth-Stage', 'Featured'],
+      },
       {
         id: 'fund1',
         title: 'Student Innovation Grant 2025',
@@ -2047,7 +2126,7 @@ const initializeDemoUserData = () => {
   if (typeof window === 'undefined') return;
   
   const DEMO_USER_ID = 'demo-user';
-  const DEMO_USER_EMAIL = 'demo@dreamify.com';
+  const DEMO_USER_EMAIL = 'demo@gostarthub.com';
   
   // Check if demo user exists, create if not
   const users = storage.getUsers();
@@ -2098,13 +2177,13 @@ const initializeDemoUserData = () => {
         },
         contactInfo: {
           location: 'Universiti Malaya, Kuala Lumpur',
-          email: 'demo@dreamify.com',
+          email: 'demo@gostarthub.com',
           phone: '+60123456789',
         },
         keyPeople: [
           { name: 'Demo User', role: 'Founder, Lead Developer' },
         ],
-        programmes: ['Dreamify Pre-Accelerator Bootcamp'],
+        programmes: ['Go Start Hub Pre-Accelerator Bootcamp'],
         foundedYear: 2024,
         growthStage: 'Early',
         primaryHQ: 'Kuala Lumpur',

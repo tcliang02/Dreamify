@@ -74,7 +74,7 @@ export default function Navbar() {
     const handleAuthChange = () => {
       loadUserData();
     };
-    window.addEventListener('dreamify:auth-change', handleAuthChange);
+    window.addEventListener('gostarthub:auth-change', handleAuthChange);
 
     // Also check periodically in case of same-tab updates (less frequent)
     const interval = setInterval(() => {
@@ -84,7 +84,7 @@ export default function Navbar() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener('dreamify:auth-change', handleAuthChange);
+      window.removeEventListener('gostarthub:auth-change', handleAuthChange);
       clearInterval(interval);
     };
   }, []);
@@ -95,54 +95,51 @@ export default function Navbar() {
       setUser(null);
       setSubscriptionTier('Free');
       // Dispatch event to notify other components
-      window.dispatchEvent(new Event('dreamify:auth-change'));
+      window.dispatchEvent(new Event('gostarthub:auth-change'));
       window.location.href = '/';
     }
   };
 
   return (
     <nav className={cn(
-      "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all",
-      scrolled && "shadow-md"
+      "sticky top-0 z-50 w-full border-b bg-gradient-to-r from-cyan-50/90 via-blue-50/90 to-purple-50/90 backdrop-blur-xl supports-[backdrop-filter]:bg-gradient-to-r supports-[backdrop-filter]:from-cyan-50/70 supports-[backdrop-filter]:via-blue-50/70 supports-[backdrop-filter]:to-purple-50/70 transition-all border-cyan-400/30",
+      scrolled && "shadow-lg shadow-cyan-500/20 glow-blue"
     )}>
       <div className="container flex h-16 items-center justify-between px-4">
-        <Link href="/" className="flex items-center space-x-3 group">
+        <Link href="/" className="flex items-center group">
           <img 
-            src="/images/dreamifylogo.png" 
-            alt="Dreamify Logo" 
+            src="/images/gostarthublogo.png" 
+            alt="Go Start Hub Logo" 
             className="h-12 w-auto group-hover:opacity-80 transition-opacity flex-shrink-0"
             onError={(e) => {
               // Fallback to icon if image fails
               e.currentTarget.style.display = 'none';
               const parent = e.currentTarget.parentElement;
               if (parent) {
-                parent.innerHTML = '<div class="relative"><svg class="h-6 w-6 text-primary group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg></div><span class="text-2xl font-medium tracking-wider bg-gradient-to-r from-blue-600 via-blue-500 to-blue-700 bg-clip-text text-transparent">DREAMIFY</span>';
+                parent.innerHTML = '<div class="relative"><svg class="h-6 w-6 text-primary group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg></div>';
               }
             }}
           />
-          <span className="text-2xl font-medium tracking-wider bg-gradient-to-r from-blue-600 via-blue-500 to-blue-700 bg-clip-text text-transparent group-hover:opacity-90 transition-opacity" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 500 }}>
-            DREAMIFY
-          </span>
         </Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-6">
-          <Link href="/startups" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+          <Link href="/startups" className="text-sm font-medium text-muted-foreground hover:text-cyan-500 transition-colors duration-300 hover:scale-105">
             Startups
           </Link>
-          <Link href="/programmes" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+          <Link href="/programmes" className="text-sm font-medium text-muted-foreground hover:text-cyan-500 transition-colors duration-300 hover:scale-105">
             Programmes
           </Link>
-          <Link href="/events" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+          <Link href="/events" className="text-sm font-medium text-muted-foreground hover:text-cyan-500 transition-colors duration-300 hover:scale-105">
             Events
           </Link>
-          <Link href="/mentors" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+          <Link href="/mentors" className="text-sm font-medium text-muted-foreground hover:text-cyan-500 transition-colors duration-300 hover:scale-105">
             Mentors
           </Link>
-          <Link href="/funding" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+          <Link href="/funding" className="text-sm font-medium text-muted-foreground hover:text-cyan-500 transition-colors duration-300 hover:scale-105">
             Funding
           </Link>
-          <Link href="/resources" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+          <Link href="/resources" className="text-sm font-medium text-muted-foreground hover:text-cyan-500 transition-colors duration-300 hover:scale-105">
             Resources
           </Link>
 
@@ -167,7 +164,7 @@ export default function Navbar() {
                 <Button variant="ghost" size="sm">Login</Button>
               </Link>
               <Link href="/register">
-                <Button size="sm">Sign Up</Button>
+                <Button size="sm" className="bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 text-white shadow-lg glow-electric">Sign Up</Button>
               </Link>
             </div>
           ) : (
@@ -229,7 +226,7 @@ export default function Navbar() {
                   <Button variant="ghost" size="sm" className="w-full">Login</Button>
                 </Link>
                 <Link href="/register">
-                  <Button size="sm" className="w-full">Sign Up</Button>
+                  <Button size="sm" className="w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 text-white shadow-lg glow-electric">Sign Up</Button>
                 </Link>
               </>
             ) : null}

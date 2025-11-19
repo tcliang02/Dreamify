@@ -1,4 +1,4 @@
-# Dreamify
+# Go Start Hub
 
 A platform for young innovators and students to display and showcase their prototypes for funds and mentorship from businesses around the Malaysia market.
 
@@ -87,7 +87,7 @@ The production build will be optimized and ready for deployment.
 ## Project Structure
 
 ```
-Dreamify/
+Go Start Hub/
 ├── app/                 # Next.js app directory (pages and API routes)
 │   ├── api/            # API endpoints
 │   ├── businesses/     # Business pages

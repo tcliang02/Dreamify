@@ -8,7 +8,7 @@ import { Building2, Users, DollarSign, TrendingUp, ArrowRight, UserCheck } from 
 
 export default function BusinessesPage() {
   return (
-    <div className="min-h-screen bg-background py-12">
+    <div className="min-h-screen py-12">
       <div className="container mx-auto px-4">
         <div className="mb-12 text-center">
           <Badge variant="secondary" className="mb-4">Business Network</Badge>

@@ -19,14 +19,14 @@ export default function LoginPage() {
   useEffect(() => {
     const autoLogin = () => {
       const users = storage.getUsers();
-      let demoUser = users.find((u: any) => u.email === 'demo@dreamify.com' || u.id === 'demo-user');
+      let demoUser = users.find((u: any) => u.email === 'demo@gostarthub.com' || u.id === 'demo-user');
       
       if (!demoUser) {
         // Create demo user
         demoUser = {
           id: 'demo-user',
           name: 'Demo User',
-          email: 'demo@dreamify.com',
+          email: 'demo@gostarthub.com',
           role: 'innovator',
           university: 'Universiti Malaya (UM)',
           field: 'Computer Science',
@@ -39,7 +39,7 @@ export default function LoginPage() {
       initializeData();
       // Dispatch event to notify navbar
       if (typeof window !== 'undefined') {
-        window.dispatchEvent(new Event('dreamify:auth-change'));
+        window.dispatchEvent(new Event('gostarthub:auth-change'));
       }
       router.push('/dashboard');
     };
@@ -56,14 +56,14 @@ export default function LoginPage() {
     let user = users.find((u: any) => u.email === email);
     
     // Check if it's demo user email
-    if (email.toLowerCase() === 'demo@dreamify.com' || email.toLowerCase().includes('demo')) {
-      user = users.find((u: any) => u.email === 'demo@dreamify.com' || u.id === 'demo-user');
+    if (email.toLowerCase() === 'demo@gostarthub.com' || email.toLowerCase().includes('demo')) {
+      user = users.find((u: any) => u.email === 'demo@gostarthub.com' || u.id === 'demo-user');
       if (!user) {
         // Create demo user
         user = {
           id: 'demo-user',
           name: 'Demo User',
-          email: 'demo@dreamify.com',
+          email: 'demo@gostarthub.com',
           role: 'innovator',
           university: 'Universiti Malaya (UM)',
           field: 'Computer Science',
@@ -86,20 +86,20 @@ export default function LoginPage() {
     if (user) {
       storage.saveSession(user);
       // Initialize demo data if it's the demo user
-      if (user.id === 'demo-user' || user.email === 'demo@dreamify.com') {
+      if (user.id === 'demo-user' || user.email === 'demo@gostarthub.com') {
         // Trigger initialization (it will check if data exists)
         initializeData();
       }
       // Dispatch event to notify navbar
       if (typeof window !== 'undefined') {
-        window.dispatchEvent(new Event('dreamify:auth-change'));
+        window.dispatchEvent(new Event('gostarthub:auth-change'));
       }
       router.push('/dashboard');
     }
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center py-12 px-4">
+    <div className="min-h-screen  flex items-center justify-center py-12 px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
@@ -107,7 +107,7 @@ export default function LoginPage() {
           </div>
           <CardTitle className="text-3xl">Welcome Back</CardTitle>
           <CardDescription>
-            Sign in to your Dreamify account
+            Sign in to your Go Start Hub account
           </CardDescription>
         </CardHeader>
         <CardContent>

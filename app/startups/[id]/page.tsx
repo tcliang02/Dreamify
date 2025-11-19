@@ -78,7 +78,7 @@ export default function StartupDetailPage() {
 
   if (!startup) {
     return (
-      <div className="min-h-screen bg-background py-12">
+      <div className="min-h-screen  py-12">
         <div className="container mx-auto px-4">
           <Card className="text-center py-12">
             <CardContent>
@@ -99,7 +99,7 @@ export default function StartupDetailPage() {
   const fundingProgress = (startup.fundingReceived / startup.fundingNeeded) * 100;
 
   return (
-    <div className="min-h-screen bg-background py-12">
+    <div className="min-h-screen  py-12">
       <div className="container mx-auto px-4 max-w-6xl">
         <Link href="/startups">
           <Button variant="ghost" className="mb-6">
@@ -279,13 +279,15 @@ export default function StartupDetailPage() {
 
         {/* Detailed Information Tabs */}
         <Tabs defaultValue="profile" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 sm:grid-cols-5 overflow-x-auto">
-            <TabsTrigger value="profile">Profile</TabsTrigger>
-            <TabsTrigger value="team">Team</TabsTrigger>
-            <TabsTrigger value="financials">Financials</TabsTrigger>
-            <TabsTrigger value="pitch">Pitch Details</TabsTrigger>
-            <TabsTrigger value="news">News</TabsTrigger>
-          </TabsList>
+          <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
+            <TabsList className="inline-flex w-auto min-w-full sm:grid sm:w-full sm:grid-cols-5 h-auto gap-1">
+              <TabsTrigger value="profile" className="whitespace-nowrap flex-shrink-0 px-4 sm:px-3">Profile</TabsTrigger>
+              <TabsTrigger value="team" className="whitespace-nowrap flex-shrink-0 px-4 sm:px-3">Team</TabsTrigger>
+              <TabsTrigger value="financials" className="whitespace-nowrap flex-shrink-0 px-4 sm:px-3">Financials</TabsTrigger>
+              <TabsTrigger value="pitch" className="whitespace-nowrap flex-shrink-0 px-4 sm:px-3">Pitch Details</TabsTrigger>
+              <TabsTrigger value="news" className="whitespace-nowrap flex-shrink-0 px-4 sm:px-3">News</TabsTrigger>
+            </TabsList>
+          </div>
 
           {/* Profile Tab */}
           <TabsContent value="profile" className="mt-6">
@@ -737,15 +739,24 @@ export default function StartupDetailPage() {
                       <FileText className="h-5 w-5" />
                       <span>Pitch PDF Available</span>
                     </div>
-                    <iframe
-                      src={startup.pitchPdf}
-                      className="w-full h-[600px] border rounded-lg"
-                      title="Pitch PDF"
-                    />
-                    <a href={startup.pitchPdf} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:underline">
-                      <ExternalLink className="h-4 w-4" />
-                      Open PDF in new tab
-                    </a>
+                    <div className="w-full border rounded-lg overflow-hidden bg-gray-50">
+                      <iframe
+                        src={`${startup.pitchPdf}#toolbar=1&navpanes=1&scrollbar=1`}
+                        className="w-full h-[600px]"
+                        title="Pitch PDF"
+                        type="application/pdf"
+                      />
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <a href={startup.pitchPdf} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:underline">
+                        <ExternalLink className="h-4 w-4" />
+                        Open PDF in new tab
+                      </a>
+                      <a href={startup.pitchPdf} download className="inline-flex items-center gap-2 text-primary hover:underline">
+                        <FileText className="h-4 w-4" />
+                        Download PDF
+                      </a>
+                    </div>
                   </div>
                 ) : (
                   <div className="text-center py-12">

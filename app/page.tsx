@@ -69,15 +69,15 @@ export default function Home() {
             <p className="text-xl md:text-2xl mb-10 text-white/90 max-w-2xl mx-auto">
               Showcase your prototypes, connect with mentors, and secure funding to turn your ideas into reality
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/register">
-                <Button size="lg" className="bg-white text-primary hover:bg-white/90 shadow-lg hover:shadow-xl transition-all">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Link href="/startups" className="w-full sm:w-auto">
+                <Button size="lg" className="w-full sm:w-auto bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 text-white shadow-2xl hover:shadow-cyan-500/50 transition-all duration-300 font-bold text-lg px-8 py-6 glow-cyber border-2 border-cyan-400/40 hover:scale-105">
                   Get Started
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <Link href="/programmes">
-                <Button size="lg" variant="outline" className="border-white/20 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20">
+              <Link href="/programmes" className="w-full sm:w-auto">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-cyan-400/50 bg-white/10 backdrop-blur-xl text-cyan-400 hover:bg-cyan-500/20 hover:border-cyan-400/70 hover:text-cyan-300 glass-futuristic px-8 py-6 text-lg font-bold hover:scale-105 transition-all duration-300 shadow-lg">
                   View Programmes
                 </Button>
               </Link>
@@ -87,23 +87,24 @@ export default function Home() {
       </section>
 
       {/* Statistics Banner */}
-      <section className="py-12 bg-primary text-white">
-        <div className="container mx-auto px-4">
+      <section className="py-12 bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white relative overflow-hidden">
+        <div className="absolute inset-0 tech-grid opacity-30"></div>
+        <div className="container relative z-10 mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold mb-2">{stats.totalStartups}+</div>
+              <div className="text-4xl md:text-5xl font-bold mb-2 drop-shadow-lg">{stats.totalStartups}+</div>
               <div className="text-sm md:text-base text-white/90">Active Startups</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold mb-2">{stats.totalMentors}+</div>
+              <div className="text-4xl md:text-5xl font-bold mb-2 drop-shadow-lg">{stats.totalMentors}+</div>
               <div className="text-sm md:text-base text-white/90">Expert Mentors</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold mb-2">RM {(stats.totalFunding / 1000).toFixed(0)}K+</div>
+              <div className="text-4xl md:text-5xl font-bold mb-2 drop-shadow-lg">RM {(stats.totalFunding / 1000).toFixed(0)}K+</div>
               <div className="text-sm md:text-base text-white/90">Funding Raised</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold mb-2">{stats.totalUsers}+</div>
+              <div className="text-4xl md:text-5xl font-bold mb-2 drop-shadow-lg">{stats.totalUsers}+</div>
               <div className="text-sm md:text-base text-white/90">Innovators</div>
             </div>
           </div>
@@ -115,8 +116,8 @@ export default function Home() {
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <Badge variant="secondary" className="mb-4">Success Stories</Badge>
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">Featured Startups</h2>
+              <Badge variant="secondary" className="mb-4 bg-blue-100 text-blue-700 border-blue-200">Success Stories</Badge>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 gradient-text-cyber">Featured Startups</h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                 Discover innovative projects from our community
               </p>
@@ -124,7 +125,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {featuredStartups.map((startup) => (
                 <Link key={startup.id} href={`/startups/${startup.id}`}>
-                  <Card className="hover-lift border-2 hover:border-primary/50 transition-all h-full">
+                  <Card className="hover-lift transition-all h-full">
                     {startup.image && (
                       <div className="relative w-full h-48 overflow-hidden rounded-t-lg bg-muted">
                         <img
@@ -171,20 +172,20 @@ export default function Home() {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <Badge variant="secondary" className="mb-4">Why Choose Dreamify?</Badge>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Everything You Need to Succeed</h2>
+            <Badge variant="secondary" className="mb-4 bg-blue-100 text-blue-700 border-blue-200">Why Choose Go Start Hub?</Badge>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 gradient-text-cyber">Everything You Need to Succeed</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               The complete platform for student innovators in Malaysia
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card className="border-2 hover-lift hover:border-primary/50 transition-all group">
+            <Card className="hover-lift transition-all group">
               <CardHeader>
-                <div className="w-14 h-14 rounded-xl bg-blue-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg glow-blue">
                   <Target className="h-7 w-7 text-white" />
                 </div>
-                <CardTitle>Showcase Prototypes</CardTitle>
+                <CardTitle className="gradient-text-blue">Showcase Prototypes</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
@@ -193,12 +194,12 @@ export default function Home() {
               </CardContent>
             </Card>
 
-            <Card className="border-2 hover-lift hover:border-primary/50 transition-all group">
+            <Card className="hover-lift transition-all group">
               <CardHeader>
-                <div className="w-14 h-14 rounded-xl bg-purple-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-blue-300 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg glow-blue">
                   <BookOpen className="h-7 w-7 text-white" />
                 </div>
-                <CardTitle>Innovation Programmes</CardTitle>
+                <CardTitle className="gradient-text-blue">Innovation Programmes</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
@@ -207,12 +208,12 @@ export default function Home() {
               </CardContent>
             </Card>
 
-            <Card className="border-2 hover-lift hover:border-primary/50 transition-all group">
+            <Card className="hover-lift transition-all group">
               <CardHeader>
-                <div className="w-14 h-14 rounded-xl bg-pink-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-700 to-blue-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg glow-blue">
                   <Calendar className="h-7 w-7 text-white" />
                 </div>
-                <CardTitle>Networking Events</CardTitle>
+                <CardTitle className="gradient-text-blue">Networking Events</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
@@ -221,12 +222,12 @@ export default function Home() {
               </CardContent>
             </Card>
 
-            <Card className="border-2 hover-lift hover:border-primary/50 transition-all group">
+            <Card className="hover-lift transition-all group">
               <CardHeader>
-                <div className="w-14 h-14 rounded-xl bg-green-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg glow-blue">
                   <Users className="h-7 w-7 text-white" />
                 </div>
-                <CardTitle>Expert Mentorship</CardTitle>
+                <CardTitle className="gradient-text-blue">Expert Mentorship</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
@@ -235,12 +236,12 @@ export default function Home() {
               </CardContent>
             </Card>
 
-            <Card className="border-2 hover-lift hover:border-primary/50 transition-all group">
+            <Card className="hover-lift transition-all group">
               <CardHeader>
-                <div className="w-14 h-14 rounded-xl bg-yellow-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-blue-300 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg glow-blue">
                   <DollarSign className="h-7 w-7 text-white" />
                 </div>
-                <CardTitle>Funding Opportunities</CardTitle>
+                <CardTitle className="gradient-text-blue">Funding Opportunities</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
@@ -249,12 +250,12 @@ export default function Home() {
               </CardContent>
             </Card>
 
-            <Card className="border-2 hover-lift hover:border-primary/50 transition-all group">
+            <Card className="hover-lift transition-all group">
               <CardHeader>
-                <div className="w-14 h-14 rounded-xl bg-indigo-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-700 to-blue-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg glow-blue">
                   <TrendingUp className="h-7 w-7 text-white" />
                 </div>
-                <CardTitle>Growth Support</CardTitle>
+                <CardTitle className="gradient-text-blue">Growth Support</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
@@ -267,23 +268,23 @@ export default function Home() {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 bg-muted/50">
+      <section className="py-20 bg-gradient-to-b from-white via-blue-50/30 to-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <Badge variant="secondary" className="mb-4">Simple Process</Badge>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">How It Works</h2>
+            <Badge variant="secondary" className="mb-4 bg-blue-100 text-blue-700 border-blue-200">Simple Process</Badge>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 gradient-text-cyber">How It Works</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Simple steps to get started on your innovation journey
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <Card className="text-center border-2 hover-lift">
+            <Card className="text-center hover-lift">
               <CardHeader>
-                <div className="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center mx-auto mb-4 text-2xl font-bold shadow-lg">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-600 to-blue-400 text-white flex items-center justify-center mx-auto mb-4 text-2xl font-bold shadow-lg glow-blue">
                   1
                 </div>
-                <CardTitle>Create Your Profile</CardTitle>
+                <CardTitle className="gradient-text-blue">Create Your Profile</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
@@ -292,12 +293,12 @@ export default function Home() {
               </CardContent>
             </Card>
 
-            <Card className="text-center border-2 hover-lift">
+            <Card className="text-center hover-lift">
               <CardHeader>
-                <div className="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center mx-auto mb-4 text-2xl font-bold shadow-lg">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-600 to-blue-400 text-white flex items-center justify-center mx-auto mb-4 text-2xl font-bold shadow-lg glow-blue">
                   2
                 </div>
-                <CardTitle>Showcase Your Prototype</CardTitle>
+                <CardTitle className="gradient-text-blue">Showcase Your Prototype</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
@@ -306,12 +307,12 @@ export default function Home() {
               </CardContent>
             </Card>
 
-            <Card className="text-center border-2 hover-lift">
+            <Card className="text-center hover-lift">
               <CardHeader>
-                <div className="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center mx-auto mb-4 text-2xl font-bold shadow-lg">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-600 to-blue-400 text-white flex items-center justify-center mx-auto mb-4 text-2xl font-bold shadow-lg glow-blue">
                   3
                 </div>
-                <CardTitle>Connect & Grow</CardTitle>
+                <CardTitle className="gradient-text-blue">Connect & Grow</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
@@ -324,84 +325,84 @@ export default function Home() {
       </section>
 
       {/* Success Stories / Testimonials */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20 bg-gradient-to-b from-blue-50/50 via-white to-blue-50/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <Badge variant="secondary" className="mb-4">Testimonials</Badge>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Success Stories</h2>
+            <Badge variant="secondary" className="mb-4 bg-blue-100 text-blue-700 border-blue-200">Testimonials</Badge>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 gradient-text-cyber">Success Stories</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Hear from innovators who turned their ideas into reality
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <Card className="border-2 hover-lift">
+            <Card className="hover-lift">
               <CardHeader>
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center text-white font-bold shadow-lg">
                     AS
                   </div>
                   <div>
-                    <CardTitle className="text-lg">Ahmad Syafiq</CardTitle>
+                    <CardTitle className="text-lg gradient-text-blue">Ahmad Syafiq</CardTitle>
                     <CardDescription>UTM Student</CardDescription>
                   </div>
                 </div>
-                <Quote className="h-8 w-8 text-primary/30 mb-2" />
+                <Quote className="h-8 w-8 text-blue-400/50 mb-2" />
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground italic mb-4">
-                  "Dreamify helped me connect with the right mentors and secure funding for my IoT project. The platform made it easy to showcase my prototype and get noticed by investors."
+                  "Go Start Hub helped me connect with the right mentors and secure funding for my IoT project. The platform made it easy to showcase my prototype and get noticed by investors."
                 </p>
                 <div className="flex items-center gap-2 text-sm">
-                  <Award className="h-4 w-4 text-yellow-500" />
-                  <span className="font-semibold">RM 50,000 Funding Secured</span>
+                  <Award className="h-4 w-4 text-blue-500" />
+                  <span className="font-semibold text-blue-700">RM 50,000 Funding Secured</span>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="border-2 hover-lift">
+            <Card className="hover-lift">
               <CardHeader>
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-pink-500 flex items-center justify-center text-white font-bold">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-300 flex items-center justify-center text-white font-bold shadow-lg">
                     SL
                   </div>
                   <div>
-                    <CardTitle className="text-lg">Sarah Lim</CardTitle>
+                    <CardTitle className="text-lg gradient-text-blue">Sarah Lim</CardTitle>
                     <CardDescription>UM Graduate</CardDescription>
                   </div>
                 </div>
-                <Quote className="h-8 w-8 text-primary/30 mb-2" />
+                <Quote className="h-8 w-8 text-blue-400/50 mb-2" />
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground italic mb-4">
-                  "The mentorship program on Dreamify was invaluable. My mentor guided me through the entire startup journey, from prototype to market launch. Highly recommended!"
+                  "The mentorship program on Go Start Hub was invaluable. My mentor guided me through the entire startup journey, from prototype to market launch. Highly recommended!"
                 </p>
                 <div className="flex items-center gap-2 text-sm">
-                  <CheckCircle2 className="h-4 w-4 text-green-500" />
-                  <span className="font-semibold">Startup Launched</span>
+                  <CheckCircle2 className="h-4 w-4 text-blue-500" />
+                  <span className="font-semibold text-blue-700">Startup Launched</span>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="border-2 hover-lift">
+            <Card className="hover-lift">
               <CardHeader>
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-700 to-blue-500 flex items-center justify-center text-white font-bold shadow-lg">
                     MH
                   </div>
                   <div>
-                    <CardTitle className="text-lg">Muhammad Hafiz</CardTitle>
+                    <CardTitle className="text-lg gradient-text-blue">Muhammad Hafiz</CardTitle>
                     <CardDescription>UPM Student</CardDescription>
                   </div>
                 </div>
-                <Quote className="h-8 w-8 text-primary/30 mb-2" />
+                <Quote className="h-8 w-8 text-blue-400/50 mb-2" />
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground italic mb-4">
-                  "I joined the Dreamify Accelerator program and it transformed my idea into a viable business. The workshops, networking events, and funding opportunities were exactly what I needed."
+                  "I joined the Go Start Hub Accelerator program and it transformed my idea into a viable business. The workshops, networking events, and funding opportunities were exactly what I needed."
                 </p>
                 <div className="flex items-center gap-2 text-sm">
                   <TrendingUp className="h-4 w-4 text-blue-500" />
-                  <span className="font-semibold">Accelerator Graduate</span>
+                  <span className="font-semibold text-blue-700">Accelerator Graduate</span>
                 </div>
               </CardContent>
             </Card>
@@ -410,18 +411,18 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid-white/10 [mask-image:linear-gradient(0deg,white,transparent)]" />
+      <section className="py-20 bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 text-white relative overflow-hidden">
+        <div className="absolute inset-0 tech-grid-purple opacity-30"></div>
         <div className="container relative z-10 mx-auto px-4 text-center">
-          <Rocket className="h-16 w-16 mx-auto mb-6 animate-bounce" />
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Ready to Start Your Innovation Journey?</h2>
+          <Rocket className="h-16 w-16 mx-auto mb-6 animate-float drop-shadow-lg" />
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">Ready to Start Your Innovation Journey?</h2>
           <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
-            Join hundreds of young innovators already on Dreamify
+            Join hundreds of young innovators already on Go Start Hub
           </p>
-          <Link href="/register">
-            <Button size="lg" className="bg-white text-primary hover:bg-white/90 shadow-xl hover:shadow-2xl transition-all">
+          <Link href="/startups">
+            <Button size="lg" className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 hover:from-cyan-300 hover:via-blue-400 hover:to-purple-400 text-white shadow-2xl hover:shadow-cyan-500/50 transition-all duration-300 font-bold text-lg px-8 py-6 glow-cyber border-2 border-cyan-300/40 hover:scale-105">
               Get Started Now
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
         </div>

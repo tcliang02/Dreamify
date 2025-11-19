@@ -3,15 +3,16 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import PageBackground from '@/components/PageBackground'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Dreamify - Platform for Young Innovators',
+  title: 'Go Start Hub - Platform for Young Innovators',
   description: 'A platform for young innovators and students to showcase prototypes and connect with mentors and funding opportunities in Malaysia',
   icons: {
-    icon: '/images/dreamifylogo.png',
-    apple: '/images/dreamifylogo.png',
+    icon: '/images/gostarthublogo.png',
+    apple: '/images/gostarthublogo.png',
   },
 }
 
@@ -24,7 +25,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Navbar />
-        <main>{children}</main>
+        <PageBackground>
+          <main>{children}</main>
+        </PageBackground>
         <Footer />
       </body>
     </html>

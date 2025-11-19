@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { storage } from '@/lib/storage';
 import { FundingOpportunity } from '@/types';
-import { DollarSign, Calendar, Tag, CheckCircle, ArrowRight } from 'lucide-react';
+import { DollarSign, Calendar, Tag, CheckCircle, ArrowRight, Star, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -15,7 +15,14 @@ export default function FundingPage() {
 
   useEffect(() => {
     const allOpportunities = storage.getFundingOpportunities();
-    setOpportunities(allOpportunities);
+    // Sort: featured first, then by amount (descending)
+    const sorted = allOpportunities.sort((a: any, b: any) => {
+      const aFeatured = (a.featured || false) ? 1 : 0;
+      const bFeatured = (b.featured || false) ? 1 : 0;
+      if (aFeatured !== bFeatured) return bFeatured - aFeatured;
+      return (b.amount || 0) - (a.amount || 0);
+    });
+    setOpportunities(sorted);
   }, []);
 
   const filteredOpportunities = filter === 'all'
@@ -39,7 +46,7 @@ export default function FundingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background py-12">
+    <div className="min-h-screen py-12">
       <div className="container mx-auto px-4">
         <div className="mb-6 sm:mb-8">
           <Badge variant="secondary" className="mb-3 sm:mb-4">Funding Hub</Badge>
@@ -84,12 +91,30 @@ export default function FundingPage() {
           </Card>
         ) : (
           <div className="space-y-6">
-            {filteredOpportunities.map((opportunity) => (
-              <Card key={opportunity.id} className="hover-lift border-2 hover:border-primary/50 transition-all">
+            {filteredOpportunities.map((opportunity: any) => (
+              <Card 
+                key={opportunity.id} 
+                className={`hover-lift border-2 hover:border-primary/50 transition-all ${
+                  opportunity.featured ? 'border-primary bg-gradient-to-br from-primary/5 to-transparent' : ''
+                }`}
+              >
                 <CardHeader>
                   <div className="flex flex-col sm:flex-row justify-between items-start gap-3">
                     <div className="flex-1">
-                      <CardTitle className="text-xl sm:text-2xl mb-2">{opportunity.title}</CardTitle>
+                      <div className="flex items-center gap-2 mb-2">
+                        <CardTitle className="text-xl sm:text-2xl">{opportunity.title}</CardTitle>
+                        {opportunity.featured && (
+                          <Badge className="bg-yellow-500 text-white border-yellow-600">
+                            <Star className="h-3 w-3 mr-1" />
+                            Featured
+                          </Badge>
+                        )}
+                        {opportunity.category === 'Government Grant' && (
+                          <Badge variant="secondary" className="bg-blue-100 text-blue-700 border-blue-200">
+                            Government
+                          </Badge>
+                        )}
+                      </div>
                       <CardDescription className="text-sm sm:text-base">{opportunity.description}</CardDescription>
                     </div>
                     <Badge variant={opportunity.status === 'open' ? 'default' : 'secondary'} className="flex-shrink-0">
@@ -101,7 +126,12 @@ export default function FundingPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 mb-6">
                     <div className="flex items-center">
                       <DollarSign className="h-4 w-4 mr-2 text-primary" />
-                      <span className="font-semibold">RM {opportunity.amount.toLocaleString()}</span>
+                      <div>
+                        <span className="font-semibold">RM {opportunity.amount.toLocaleString()}</span>
+                        {opportunity.grantDuration && (
+                          <div className="text-xs text-muted-foreground">Duration: {opportunity.grantDuration}</div>
+                        )}
+                      </div>
                     </div>
                     <div className="flex items-center">
                       <Tag className="h-4 w-4 mr-2 text-muted-foreground" />
@@ -109,7 +139,13 @@ export default function FundingPage() {
                     </div>
                     <div className="flex items-center">
                       <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
-                      <span>{daysRemaining(opportunity.deadline)} days remaining</span>
+                      <div>
+                        {daysRemaining(opportunity.deadline) > 365 ? (
+                          <span>Year-round applications</span>
+                        ) : (
+                          <span>{daysRemaining(opportunity.deadline)} days remaining</span>
+                        )}
+                      </div>
                     </div>
                   </div>
 
@@ -125,9 +161,24 @@ export default function FundingPage() {
                 <CardFooter className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                   <div className="text-xs sm:text-sm text-muted-foreground">
                     <span>Provider: {opportunity.providerName}</span>
-                    <span className="ml-2 sm:ml-4">
-                      {opportunity.applications.length} application(s)
-                    </span>
+                    {opportunity.applications && (
+                      <span className="ml-2 sm:ml-4">
+                        {opportunity.applications.length} application(s)
+                      </span>
+                    )}
+                    {opportunity.officialUrl && (
+                      <div className="mt-2">
+                        <a 
+                          href={opportunity.officialUrl} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-primary hover:underline flex items-center gap-1"
+                        >
+                          Official Website
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      </div>
+                    )}
                   </div>
                   {opportunity.status === 'open' && (
                     <Link href={`/funding/${opportunity.id}/apply`} className="w-full sm:w-auto">

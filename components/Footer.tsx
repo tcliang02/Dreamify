@@ -4,26 +4,23 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="border-t bg-background mt-20">
+    <footer className="border-t bg-gradient-to-b from-white via-blue-50/30 to-white mt-20 border-blue-200/50">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <div className="flex items-center space-x-3 mb-4">
+            <div className="mb-4">
               <img 
-                src="/images/dreamifylogo.png" 
-                alt="Dreamify Logo" 
+                src="/images/gostarthublogo.png" 
+                alt="Go Start Hub Logo" 
                 className="h-12 w-auto flex-shrink-0"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
                   const parent = e.currentTarget.parentElement;
                   if (parent) {
-                    parent.innerHTML = '<h3 class="text-2xl font-medium tracking-wider bg-gradient-to-r from-blue-600 via-blue-500 to-blue-700 bg-clip-text text-transparent">DREAMIFY</h3>';
+                    parent.innerHTML = '<h3 class="text-2xl font-medium tracking-wider bg-gradient-to-r from-blue-600 via-blue-500 to-blue-700 bg-clip-text text-transparent">Go Start Hub</h3>';
                   }
                 }}
               />
-              <h3 className="text-2xl font-medium tracking-wider bg-gradient-to-r from-blue-600 via-blue-500 to-blue-700 bg-clip-text text-transparent" style={{ fontFamily: 'system-ui, -apple-system, sans-serif', fontWeight: 500 }}>
-                DREAMIFY
-              </h3>
             </div>
             <p className="text-muted-foreground text-sm">
               Empowering young innovators to showcase their startups and connect with mentors and funding opportunities.
@@ -95,7 +92,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; 2025 Dreamify. All rights reserved.</p>
+          <p>&copy; 2025 Go Start Hub. All rights reserved.</p>
           <p className="mt-2">An initiative to support young innovators in Malaysia</p>
         </div>
       </div>

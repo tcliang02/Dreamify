@@ -114,7 +114,7 @@ export default function EventRegistrationPage() {
 
   if (error && !event) {
     return (
-      <div className="min-h-screen bg-background py-12">
+      <div className="min-h-screen  py-12">
         <div className="container mx-auto px-4 max-w-2xl">
           <Link href="/events">
             <Button variant="ghost" className="mb-6">
@@ -134,7 +134,7 @@ export default function EventRegistrationPage() {
 
   if (!event) {
     return (
-      <div className="min-h-screen bg-background py-12">
+      <div className="min-h-screen  py-12">
         <div className="container mx-auto px-4">
           <div className="text-center">
             <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
@@ -147,7 +147,7 @@ export default function EventRegistrationPage() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-background py-12">
+      <div className="min-h-screen  py-12">
         <div className="container mx-auto px-4 max-w-2xl">
           <Card className="border-2 border-green-500">
             <CardHeader className="text-center">
@@ -179,7 +179,7 @@ export default function EventRegistrationPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background py-12">
+    <div className="min-h-screen  py-12">
       <div className="container mx-auto px-4 max-w-4xl">
         <Link href={`/events/${params.id}`}>
           <Button variant="ghost" className="mb-6">
